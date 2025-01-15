@@ -204,3 +204,25 @@
   outline: none;
   display: none;
 }
+
+/* sub menu*/
+ul.nav .submenu {
+  list-style-type: none;
+  padding-left: 60px;
+
+}
+
+ul.nav .submenu li {
+  padding: 5px 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+ul.nav .submenu li a {
+  /* font-size: 14px; */
+  color: #a9a9a9;
+  margin: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
