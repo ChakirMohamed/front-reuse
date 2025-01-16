@@ -1,44 +1,35 @@
-
 <div class="sidebar-wrapper">
   <div class="logo">
     <a href="http://www.creative-tim.com" class="simple-text logo-mini">
       <div class="logo-image-small">
-        <img src="assets/img/logo.png">
+        <img src="assets/img/logo.png" />
       </div>
     </a>
     <a href="https://www.creative-tim.com" class="simple-text logo-normal">
       DRPL/ S.T.R
     </a>
   </div>
-    <!--ul class="nav">
-        <li *ngFor="let menuItem of menuItems" routerLinkActive="active" class="{{menuItem.class}}">
-            <a [routerLink]="[menuItem.path]">
-                <i class="nc-icon {{menuItem.icon}}"></i>
-                <p>{{menuItem.title}}</p>
+  <ul class="nav">
+    <ng-container *ngFor="let menuItem of menuItems">
+      <li routerLinkActive="active" [ngClass]="menuItem.class">
+        <a *ngIf="!menuItem.children" [routerLink]="[menuItem.path]">
+          <i class="nc-icon {{menuItem.icon}}"></i>
+          <p>{{ menuItem.title }}</p>
+        </a>
+        <a *ngIf="menuItem.children" (click)="toggleSubmenu(menuItem)">
+          <i class="nc-icon {{menuItem.icon}}"></i>
+          <p>{{ menuItem.title }}</p>
+          <span class="caret"></span>
+        </a>
+        <ul *ngIf="menuItem.children && menuItem.expanded" class="submenu">
+          <li *ngFor="let child of menuItem.children" routerLinkActive="active">
+            <a [routerLink]="[child.path]">
+              <i class="nc-icon {{child.icon}}"></i>
+              <p>{{ child.title }}</p>
             </a>
-        </li>
-    </ul-->
-    <ul class="nav">
-      <ng-container *ngFor="let menuItem of menuItems">
-        <li routerLinkActive="active" [ngClass]="menuItem.class">
-          <a *ngIf="!menuItem.children" [routerLink]="[menuItem.path]">
-            <i class="nc-icon {{menuItem.icon}}"></i>
-            <p>{{menuItem.title}}</p>
-          </a>
-          <a *ngIf="menuItem.children" (click)="toggleSubmenu(menuItem)">
-            <i class="nc-icon {{menuItem.icon}}"></i>
-            <p>{{menuItem.title}}</p>
-            <span class="caret"></span>
-          </a>
-          <ul *ngIf="menuItem.children && menuItem.expanded" class="submenu">
-            <li *ngFor="let child of menuItem.children" routerLinkActive="active">
-              <a [routerLink]="[child.path]">
-                <i class="nc-icon {{child.icon}}"></i>
-                <p>{{child.title}}</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ng-container>
-    </ul>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
 </div>

@@ -18,17 +18,8 @@ export class CourrierService {
 
   getTypes(): Observable<any> {
     // Uncomment this line if you are using a service to fetch types from an API.
-    // return this.apiService.get('types-courrier');
-    console.log('getTypes()');
-
-    const children: any[] = [
-      { path: '/courriers/conventions', title: 'Conventions', icon: '', class: '' },
-      { path: '/courriers/demande-appui', title: 'Demande d\'appui', icon: '', class: '' },
-      { path: '/courriers/autre', title: 'Autre', icon: '', class: '' },
-    ];
-
-    // The corrected variable name to return is `children`, not `Children`.
-    return of(children); // `of` is used to create an Observable from the array.
+    return this.apiService.get('types-courrier');
+    
 }
 
 
