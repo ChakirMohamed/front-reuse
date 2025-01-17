@@ -15,10 +15,10 @@ export const AppRoutes: Routes = [
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(x => x.AdminLayoutModule)
   }]},
-  /*
+
   {
     path: '**',
     redirectTo: 'dashboard'
   }
-    */
+      
 ]

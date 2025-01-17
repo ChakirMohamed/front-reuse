@@ -20,7 +20,7 @@ import { CourriersComponent } from './pages/courriers/courriers.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    CourriersComponent
+    
   ],
   imports: [
     BrowserAnimationsModule,

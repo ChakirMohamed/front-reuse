@@ -1,1 +1,40 @@
-<p>courriers works!</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Courriers - {{ typeNom }}</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" *ngIf="courriers.length > 0; else noData">
+          <table class="table">
+            <thead class="text-primary">
+              <tr>
+                <th>ID</th>
+                <th>Numéro Envoi</th>
+                <th>Titre</th>
+                <th>Coût</th>
+                <th>Date Réception</th>
+                <th>Expéditeur</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let courrier of courriers">
+                <td>{{ courrier.id }}</td>
+                <td>{{ courrier.num_envoi }}</td>
+                <td>{{ courrier.titre }}</td>
+                <td>{{ courrier.cout }}</td>
+                <td>{{ courrier.date_reception }}</td>
+                <td>{{ courrier.expediteur }}</td>
+                <td>{{ courrier.id_status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noData>
+          <p>Aucun courrier trouvé pour le type "{{ typeNom }}".</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

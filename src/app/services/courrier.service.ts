@@ -16,10 +16,15 @@ export class CourrierService {
     return this.apiService.get(`courriers/${id}`);
   }
 
+  getCourriersByTypeName(nom: string): Observable<any> {
+    return this.apiService.get(`courriers/filter/type/${nom}`);
+  }
+
+
   getTypes(): Observable<any> {
     // Uncomment this line if you are using a service to fetch types from an API.
     return this.apiService.get('types-courrier');
-    
+
 }
 
 
