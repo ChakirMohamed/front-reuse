@@ -1,0 +1,108 @@
+.courriers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .courrier-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background: #fff;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .badge {
+        background: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .card-body {
+      p {
+        margin: 5px 0;
+        font-size: 0.95rem;
+        color: #555;
+
+        strong {
+          color: #333;
+        }
+      }
+
+      .extra-info {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            font-size: 0.9rem;
+            color: #666;
+          }
+        }
+      }
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+
+      .btn {
+        padding: 10px 15px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+
+        &:hover {
+          background: #0056b3;
+        }
+      }
+    }
+  }
+}
+
+.communes-container {
+  .row {
+    margin-bottom: 10px;
+  }
+
+  .col-md-4 {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  strong {
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: 600;
+  }
+
+  span {
+    font-weight: 400;
+  }
+}
+  

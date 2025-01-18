@@ -21,6 +21,7 @@ export const ROUTES: RouteInfo[] = [
         children: [], // Start with an empty array, to be populated dynamically
     },
     /* Add other menu items here if necessary */
+    /*
     { path: '/icons',         title: 'Icons',             icon:'nc-diamond',    class: '' },
     { path: '/maps',          title: 'Maps',              icon:'nc-pin-3',      class: '' },
     { path: '/notifications', title: 'Notifications',     icon:'nc-bell-55',    class: '' },
@@ -28,6 +29,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/table',         title: 'Table List',        icon:'nc-tile-56',    class: '' },
     { path: '/typography',    title: 'Typography',        icon:'nc-caps-small', class: '' },
     { path: '/upgrade',       title: 'Upgrade to PRO',    icon:'nc-spaceship',  class: 'active-pro' },
+     */
 ];
 
 @Component({
