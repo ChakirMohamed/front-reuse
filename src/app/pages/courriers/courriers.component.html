@@ -1,133 +1,72 @@
-  <div class="courriers-container">
-    <div *ngFor="let courrier of courriers" class="courrier-card">
-      <div class="card-header">
-        <h4>{{ courrier.titre }}</h4>
-        <span class="badge">{{ courrier.status_nom }}</span>
-      </div>
-      <div class="card-body">
-        <div class="d-flex flex-wrap justify-content-between">
-          <span><strong>Numéro d'envoi:</strong> {{ courrier.num_envoi }}</span>
-          <span><strong>Expéditeur:</strong> {{ courrier.expediteur }}</span>
-          <span><strong>Date de réception:</strong> {{ courrier.date_reception | date:'dd/MM/yyyy' }}</span>
-        </div>
-
-        <!-- Communes -->
-      <!--div *ngIf="courrier.communes.length">
-        <h6>Communes</h6>
-        <ul>
-          <li *ngFor="let region of courrier.communes">
-            <strong>{{ region.region }}</strong>
-            <ul>
-              <li *ngFor="let province of region.provinces">
-                <strong>{{ province.province }}</strong>
-                <ul>
-                  <li *ngFor="let commune of province.communes">{{ commune }}</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div-->
-      <!-- Communes -->
-  <div *ngIf="courrier.communes.length" class="communes-container">
-    <div class="row align-items-center">
-      <div class="col-md-4">
-        <strong>Région:</strong> {{ courrier.communes[0].region }}
-      </div>
-      <div class="col-md-4">
-        <strong>Province:</strong>
-        <span *ngFor="let province of courrier.communes[0].provinces">
-          {{ province.province }}
-        </span>
-      </div>
-      <div class="col-md-4">
-        <strong>Communes:</strong>
-        <span *ngFor="let province of courrier.communes[0].provinces; let i = index">
-          <span *ngFor="let commune of province.communes; let j = index">
-            {{ commune }}<span *ngIf="j < province.communes.length - 1">, </span>
-          </span>
-          <span *ngIf="i < courrier.communes[0].provinces.length - 1">; </span>
-        </span>
-      </div>
+<div class="courriers-container">
+  <div *ngFor="let courrier of courriers" class="courrier-card">
+    <!-- Local Badge -->
+    <div class="card-locals text-center">
+      <span class="badge badge-locals">
+        {{ courrier.communes?.length ?
+          (courrier.communes[0]?.region + ' | ' + courrier.communes[0]?.provinces[0]?.province + ' | ' + courrier.communes[0]?.provinces[0]?.communes.join(', '))
+          : 'Aucune Commune' }}
+      </span>
     </div>
-  </div>
 
-
-        <!-- Financement -->
-        <div class="row mt-3 p-3 border rounded bg-light shadow-sm">
-          <!-- Coût -->
-          <div class="col-12 col-md-4 text-center border-end">
-            <h5 class="text-primary mb-3"><strong>Coût</strong></h5>
-            <p class="text-dark">
-              <strong>{{ courrier.cout  }} MDH</strong>
-            </p>
-          </div>
-
-          <!-- MI Financements -->
-          <div class="col-12 col-md-4 text-center border-end">
-            <h5 class="text-primary mb-3"><strong>MI Financements</strong></h5>
-            <ul class="list-unstyled text-dark" *ngIf="courrier.mi_financements?.length > 0; else noMiFinancement">
-              <li *ngFor="let mi of courrier.mi_financements" class="mb-2">
-                <span class="badge bg-info text-white">{{ mi.nom | uppercase }}</span>:<strong>{{ mi.montant }} MDH</strong>
-                                                                                        <!-- <strong>{{ mi.montant | currency:'MDH':'symbol':'1.2-2':'fr' }}</strong> -->
-
-              </li>
-            </ul>
-            <ng-template #noMiFinancement>
-              <p class="text-muted">Aucun financement MI</p>
-            </ng-template>
-          </div>
-
-          <!-- Autre Financements -->
-          <div class="col-12 col-md-4 text-center">
-            <h5 class="text-primary mb-3"><strong>Autre Financements</strong></h5>
-            <ul class="list-unstyled text-dark" *ngIf="courrier.autre_financements?.length > 0; else noAutreFinancement">
-              <li *ngFor="let autre of courrier.autre_financements" class="mb-2">
-                <span class="badge bg-success text-white">{{ autre.titre }}</span>: <strong>{{ autre.montant }} MDH</strong>
-              </li>
-            </ul>
-            <ng-template #noAutreFinancement>
-              <p class="text-muted">Aucun autre financement</p>
-            </ng-template>
-          </div>
-        </div>
-        <!-- End Financement -->
-
-
-
-
-
-
-        <p><strong>Statut:</strong> {{ courrier.est_traite ? 'Traité' : 'Non traité' }}</p>
-        <div class="extra-info">
-          <div>
-            <strong>Usages:</strong>
-            <ul>
-              <li *ngFor="let usage of courrier.usages">
-                {{ usage.nom }} ({{ usage.description }})
-              </li>
-            </ul>
-          </div>
-
-        </div>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-primary" (click)="viewDetails(courrier)">Voir détails</button>
-      </div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="card-title">{{ courrier.titre }}</h4>
+      <span class="badge badge-status">{{ courrier.status_nom }}</span>
     </div>
-  </div>
 
-  <div class="row" *ngIf="courriers.length===0">
-    <div class="col-md-12">
-      <div class="card">
-        <!-- <div class="card-header">
-          <h4 class="card-title">Courriers - {{ typeNom }}</h4>
-        </div> -->
-        <div class="card-body">
+    <div class="card-body">
+      <!-- Sender and Dates -->
+      <div class="d-flex justify-content-between flex-wrap mb-3">
+        <span><strong>Numéro:</strong> {{ courrier.num_envoi }}</span>
+        <span><strong>Expéditeur:</strong> {{ courrier.expediteur }}</span>
+        <span><strong>Date:</strong> {{ courrier.date_reception | date:'dd/MM/yyyy' }}</span>
+      </div>
 
-            <p>Aucun courrier trouvé pour le type "{{ typeNom }}".</p>
+      <!-- Financement Section -->
+      <div class="d-flex justify-content-between align-items-center">
 
+        <!-- Coût -->
+        <div>
+          <strong>Coût:</strong>
+          <div>{{ courrier.cout }} MDH</div>
+        </div>
+
+        <!-- MI Financements -->
+        <div>
+          <strong>MI Financements:</strong>
+          <div *ngIf="courrier.mi_financements?.length > 0; else noMiFinancement">
+            <table class="table table-sm financement-table">
+              <tr *ngFor="let mi of courrier.mi_financements">
+                <td><strong>{{ mi.nom }}</strong></td>
+                <td>{{ mi.montant }} MDH</td>
+              </tr>
+            </table>
+          </div>
+          <ng-template #noMiFinancement>
+            <p class="text-muted">Aucun financement MI</p>
+          </ng-template>
+        </div>
+
+        <!-- Autre Financements -->
+        <div>
+          <strong>Autre Financements:</strong>
+          <div *ngIf="courrier.autre_financements?.length > 0; else noAutreFinancement">
+            <table class="table table-sm financement-table">
+              <tr *ngFor="let autre of courrier.autre_financements">
+                <td><strong>{{ autre.titre }}</strong></td>
+                <td>{{ autre.montant }} MDH</td>
+              </tr>
+            </table>
+          </div>
+          <ng-template #noAutreFinancement>
+            <p class="text-muted">Aucun autre financement</p>
+          </ng-template>
         </div>
       </div>
     </div>
+
+    <div class="card-footer text-right">
+      <button class="btn btn-primary" (click)="viewDetails(courrier)">Voir Détails</button>
+    </div>
   </div>
+</div>

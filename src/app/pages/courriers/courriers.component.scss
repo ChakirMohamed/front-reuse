@@ -1,80 +1,76 @@
 .courriers-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 
   .courrier-card {
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background: #fff;
-    transition: transform 0.2s;
+    padding: 15px;
 
-    &:hover {
-      transform: translateY(-5px);
+    .card-locals {
+      margin-bottom: 10px;
+
+      .badge-locals {
+        font-size: 0.9rem;
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 20px;
+      }
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
 
-      h3 {
-        font-size: 1.5rem;
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
         margin: 0;
       }
 
-      .badge {
+      .badge-status {
         background: #007bff;
         color: #fff;
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 20px;
         font-size: 0.9rem;
       }
     }
 
     .card-body {
-      p {
-        margin: 5px 0;
-        font-size: 0.95rem;
-        color: #555;
+      font-size: 0.9rem;
 
-        strong {
-          color: #333;
+      .financement-table {
+        border-collapse: collapse;
+        width: auto;
+
+        td {
+          padding: 5px;
+          font-size: 0.85rem;
+          color: #555;
         }
       }
 
-      .extra-info {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-
-        ul {
-          list-style: none;
-          padding: 0;
-
-          li {
-            font-size: 0.9rem;
-            color: #666;
-          }
-        }
+      .badge {
+        font-size: 0.85rem;
+        margin-right: 5px;
       }
     }
 
     .card-footer {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
+      text-align: right;
 
       .btn {
-        padding: 10px 15px;
         background: #007bff;
         color: #fff;
         border: none;
-        border-radius: 5px;
-        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 4px;
         font-size: 0.9rem;
 
         &:hover {
@@ -84,25 +80,3 @@
     }
   }
 }
-
-.communes-container {
-  .row {
-    margin-bottom: 10px;
-  }
-
-  .col-md-4 {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  strong {
-    display: inline-block;
-    margin-right: 5px;
-    font-weight: 600;
-  }
-
-  span {
-    font-weight: 400;
-  }
-}
-  
