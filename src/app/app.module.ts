@@ -14,12 +14,14 @@ import { AppRoutes } from './app.routing';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from "@angular/common/http";
 import { CourriersComponent } from './pages/courriers/courriers.component';
+import { CreateCourrierComponent } from './create-courrier/create-courrier.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    CreateCourrierComponent,
     
   ],
   imports: [
