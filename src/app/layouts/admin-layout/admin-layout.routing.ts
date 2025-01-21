@@ -9,6 +9,7 @@ import { MapsComponent } from '../../pages/maps/maps.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
+import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/create-courrier.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,5 +20,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    { path: 'courriers/type/:nom',        component: CourriersComponent }
+    { path: 'courriers/type/:nom',        component: CourriersComponent },
+    { path: 'create-courriers',        component: CreateCourrierComponent },
 ];

@@ -13,16 +13,19 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from "@angular/common/http";
-import { CourriersComponent } from './pages/courriers/courriers.component';
-import { CreateCourrierComponent } from './create-courrier/create-courrier.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+//import { CourriersComponent } from './pages/courriers/courriers.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    CreateCourrierComponent,
-    
+
+
   ],
   imports: [
     BrowserAnimationsModule,
@@ -34,7 +37,8 @@ import { CreateCourrierComponent } from './create-courrier/create-courrier.compo
     ToastrModule.forRoot(),
     FooterModule,
     FixedPluginModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

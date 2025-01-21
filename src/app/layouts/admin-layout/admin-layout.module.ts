@@ -16,13 +16,17 @@ import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
+import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/create-courrier.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    FormsModule
   ],
   declarations: [
     DashboardComponent,
@@ -33,7 +37,8 @@ import { CourriersComponent } from '../../pages/courriers/courriers.component';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    CourriersComponent
+    CourriersComponent,
+    CreateCourrierComponent
   ]
 })
 
