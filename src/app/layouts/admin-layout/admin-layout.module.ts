@@ -10,13 +10,14 @@ import { UserComponent }            from '../../pages/user/user.component';
 import { TableComponent }           from '../../pages/table/table.component';
 import { TypographyComponent }      from '../../pages/typography/typography.component';
 import { IconsComponent }           from '../../pages/icons/icons.component';
-import { MapsComponent }            from '../../pages/maps/maps.component';
+// import { MapsComponent }            from '../../pages/maps/maps.component';
 import { NotificationsComponent }   from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
 import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/create-courrier.component';
+import { CreateStepComponent } from 'app/pages/STEP/create-step/create-step.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -35,10 +36,11 @@ import { HttpClientModule } from '@angular/common/http';
     UpgradeComponent,
     TypographyComponent,
     IconsComponent,
-    MapsComponent,
+    // MapsComponent,
     NotificationsComponent,
     CourriersComponent,
-    CreateCourrierComponent
+    CreateCourrierComponent,
+    CreateStepComponent
   ]
 })
 

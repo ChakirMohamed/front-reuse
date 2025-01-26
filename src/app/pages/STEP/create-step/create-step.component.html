@@ -1,0 +1,182 @@
+<div class="create-step-container">
+  <form (ngSubmit)="onSubmit()" #stepForm="ngForm">
+    <div class="card">
+      <div class="card-header">
+        <h2>Créer un STEP</h2>
+      </div>
+      <div class="card-body">
+        <!-- STEP Information -->
+        <div class="form-group">
+          <label for="statut">Statut</label>
+          <select
+            id="statut"
+            [(ngModel)]="step.statut"
+            name="statut"
+            class="form-control"
+            required
+          >
+            <option value="Existant">Existant</option>
+            <option value="En cours">En cours</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="milieu">Milieu</label>
+          <select
+            id="milieu"
+            [(ngModel)]="step.milieu"
+            name="milieu"
+            class="form-control"
+            required
+          >
+            <option value="Urbain">Urbain</option>
+            <option value="Rural">Rural</option>
+            <option value="Urbain et Rural">Urbain et Rural</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="operateur">Opérateur</label>
+          <input
+            id="operateur"
+            type="text"
+            [(ngModel)]="step.operateur"
+            name="operateur"
+            class="form-control"
+            placeholder="Nom de l'opérateur"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="procede">Procédé</label>
+          <input
+            id="procede"
+            type="text"
+            [(ngModel)]="step.procede"
+            name="procede"
+            class="form-control"
+            placeholder="Procédé utilisé"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="capacite">Capacité</label>
+          <input
+            id="capacite"
+            type="number"
+            [(ngModel)]="step.capacite"
+            name="capacite"
+            class="form-control"
+            placeholder="Capacité (en m³)"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="usage">Usage</label>
+          <select
+            id="usage"
+            [(ngModel)]="step.usage_id"
+            name="usage"
+            class="form-control"
+            required
+          >
+            <option *ngFor="let usage of usages" [value]="usage.id">
+              {{ usage.nom }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Communes Selection -->
+        <div class="form-group">
+          <label>Communes</label>
+          <div class="dynamic-dropdowns">
+            <select
+              [(ngModel)]="selectedRegion"
+              (change)="onRegionChange()"
+              class="form-control"
+            >
+              <option *ngFor="let region of regions" [value]="region.id">
+                {{ region.nom }}
+              </option>
+            </select>
+            <select
+              [(ngModel)]="selectedProvince"
+              (change)="onProvinceChange()"
+              class="form-control"
+              *ngIf="provinces.length > 0"
+            >
+              <option *ngFor="let province of provinces" [value]="province.id">
+                {{ province.nom }}
+              </option>
+            </select>
+            <select
+              [(ngModel)]="selectedCommune"
+              class="form-control"
+              *ngIf="communes.length > 0"
+            >
+              <option *ngFor="let commune of communes" [value]="commune.id">
+                {{ commune.nom }}
+              </option>
+            </select>
+            <button type="button" class="btn btn-primary" (click)="addCommune()">
+              Ajouter
+            </button>
+          </div>
+          <div class="selected-communes">
+            <span
+              *ngFor="let commune of step.communes"
+              class="badge badge-primary"
+            >
+              {{ commune.nom }}
+              <button
+                type="button"
+                class="btn-close"
+                (click)="removeCommune(commune)"
+              ></button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Additional Fields for En Cours -->
+        <div *ngIf="step.statut === 'En cours'">
+          <h3>Travaux en cours</h3>
+          <div *ngFor="let encours of step.encours; let i = index">
+            <div class="form-group">
+              <label>Cout</label>
+              <input
+                type="number"
+                [(ngModel)]="encours.cout_step"
+                class="form-control"
+                placeholder="Coût"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Situation Travaux</label>
+              <input
+                type="text"
+                [(ngModel)]="encours.situation_travaux"
+                class="form-control"
+                placeholder="Description"
+                required
+              />
+            </div>
+            <button type="button" (click)="removeEncours(i)" class="btn btn-danger">
+              Supprimer
+            </button>
+          </div>
+          <button type="button" (click)="addEncours()" class="btn btn-secondary">
+            Ajouter Travaux
+          </button>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success">Créer STEP</button>
+      </div>
+    </div>
+  </form>
+</div>
+
