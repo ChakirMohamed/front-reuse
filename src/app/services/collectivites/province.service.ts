@@ -12,7 +12,7 @@ export class ProvinceService {
    * Fetch all provinces
    */
   getAllProvinces(): Observable<any[]> {
-    return this.apiService.get('/provinces');
+    return this.apiService.get('provinces');
   }
 
   /**
@@ -20,7 +20,7 @@ export class ProvinceService {
    * @param regionId Region ID
    */
   getProvincesByRegionId(regionId: number): Observable<any[]> {
-    return this.apiService.get(`/regions/${regionId}/provinces`);
+    return this.apiService.get(`regions/${regionId}/provinces`);
   }
 }
 

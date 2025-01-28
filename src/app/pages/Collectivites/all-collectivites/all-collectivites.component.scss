@@ -1,0 +1,32 @@
+.hierarchy-tree {
+  mat-tree-node {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  mat-icon {
+    font-size: 18px;
+  }
+
+  span {
+    flex: 1; // Push content to fill the row
+    margin-left: 8px; // Add some space between the icon and text
+  }
+
+  .add-button {
+    padding-left: 36px; // Indent to align with the children
+    margin-top: 4px; // Add some spacing above the button
+
+    button[mat-button] {
+      margin-left: 24px; // Indent the button further
+      font-size: 14px;
+      text-transform: none; // Make text non-uppercase
+    }
+  }
+
+  /* Optional: Add hover effect for buttons */
+  button[mat-button]:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}

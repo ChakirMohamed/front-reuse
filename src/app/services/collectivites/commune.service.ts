@@ -12,7 +12,7 @@ export class CommuneService {
    * Fetch all communes
    */
   getAllCommunes(): Observable<any[]> {
-    return this.apiService.get('/communes');
+    return this.apiService.get('communes');
   }
 
   /**
@@ -20,6 +20,6 @@ export class CommuneService {
    * @param provinceId Province ID
    */
   getCommunesByProvinceId(provinceId: number): Observable<any[]> {
-    return this.apiService.get(`/provinces/${provinceId}/communes`);
+    return this.apiService.get(`provinces/${provinceId}/communes`);
   }
 }

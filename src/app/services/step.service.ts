@@ -62,6 +62,6 @@ export class StepService {
    * Get all usages (for usage dropdown)
    */
   getUsages(): Observable<any> {
-    return this.apiService.get('/usages');
+    return this.apiService.get('usages');
   }
 }

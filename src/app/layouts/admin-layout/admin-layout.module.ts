@@ -19,6 +19,18 @@ import { CourriersComponent } from '../../pages/courriers/courriers.component';
 import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/create-courrier.component';
 import { CreateStepComponent } from 'app/pages/STEP/create-step/create-step.component';
 import { HttpClientModule } from '@angular/common/http';
+//import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatInputModule } from '@angular/material/input';
+import { AddEntityDialogComponent } from '../../pages/Collectivites/add-entity-dialog/add-entity-dialog.component';
+import { AllCollectivitesComponent } from '../../pages/Collectivites/all-collectivites/all-collectivites.component';
+
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 @NgModule({
   imports: [
@@ -27,7 +39,14 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatTreeModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatDividerModule
   ],
   declarations: [
     DashboardComponent,
@@ -40,7 +59,9 @@ import { HttpClientModule } from '@angular/common/http';
     NotificationsComponent,
     CourriersComponent,
     CreateCourrierComponent,
-    CreateStepComponent
+    CreateStepComponent,
+    AddEntityDialogComponent,
+    AllCollectivitesComponent
   ]
 })
 

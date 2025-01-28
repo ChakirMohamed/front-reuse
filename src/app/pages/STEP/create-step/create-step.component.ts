@@ -15,10 +15,16 @@ export class CreateStepComponent implements OnInit {
     milieu: '',
     operateur: '',
     procede: '',
-    capacite: 0,
+    capacite: '',
     communes: [],
-    encours: [],
+
   };
+  encours: any = {
+    cout_step: null,
+    situation_travaux: '',
+    etat_avancements: [],
+  };
+  etatAvancements: any[] = [];
 
   regions: any[] = [];
   provinces: any[] = [];
@@ -52,12 +58,14 @@ export class CreateStepComponent implements OnInit {
     this.communeService
       .getCommunesByProvinceId(this.selectedProvince)
       .subscribe((data) => (this.communes = data));
+      console.log(this.communes);
   }
 
   addCommune() {
     if (this.selectedCommune) {
       const commune = this.communes.find((c) => c.id === this.selectedCommune);
       this.step.communes.push(commune);
+      this.onRegionChange();
     }
   }
 
@@ -65,8 +73,15 @@ export class CreateStepComponent implements OnInit {
     this.step.communes = this.step.communes.filter((c) => c !== commune);
   }
 
-  addEncours() {
-    this.step.encours.push({ cout_step: 0, situation_travaux: '' });
+  // addEncours() {
+  //   this.step.encours.push({ cout_step: 0, situation_travaux: '' });
+  // }
+  addEtatAvancement() {
+    this.etatAvancements.push({ annee: null, pourcentage: null });
+  }
+
+  removeEtatAvancement(index: number) {
+    this.etatAvancements.splice(index, 1);
   }
 
   removeEncours(index: number) {
@@ -74,6 +89,12 @@ export class CreateStepComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.step);
+    return;
+    if (this.step.statut === 'En cours') {
+      this.encours.etat_avancements = this.etatAvancements;
+      this.step.encours = this.encours; // Ajoute l'en cours s'il est défini
+    }
     this.stepService.createStep(this.step).subscribe((response) => {
       console.log('STEP créé avec succès !', response);
     });

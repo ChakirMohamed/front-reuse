@@ -1,37 +1,37 @@
-.create-step-container {
-  .card {
-    margin: 20px auto;
-    max-width: 800px;
-    .card-header {
-      background-color: #f8f9fa;
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
-    }
-    .card-body {
-      padding: 20px;
-      .form-group {
-        margin-bottom: 15px;
-        label {
-          font-weight: bold;
-        }
-        .form-control {
-          border-radius: 5px;
-        }
-      }
-      .dynamic-dropdowns {
-        display: flex;
-        gap: 10px;
-      }
-      .selected-communes {
-        margin-top: 10px;
-        .badge {
-          margin-right: 5px;
-        }
-      }
-    }
-    .card-footer {
-      text-align: right;
-      padding: 10px;
-    }
+// .create-step-container {
+//   .card {
+//     margin: 20px auto;
+//     max-width: 800px;
+//     .card-header {
+//       background-color: #f8f9fa;
+//       padding: 10px;
+//       border-bottom: 1px solid #ddd;
+//     }
+//     .card-body {
+//       padding: 20px;
+//       .form-group {
+//         margin-bottom: 15px;
+//         label {
+//           font-weight: bold;
+//         }
+//         .form-control {
+//           border-radius: 5px;
+//         }
+//       }
+
+//     }
+//     .card-footer {
+//       text-align: right;
+//       padding: 10px;
+//     }
+//   }
+// }
+
+
+
+.selected-communes {
+  margin-top: 10px;
+  .badge {
+    margin-right: 5px;
   }
 }

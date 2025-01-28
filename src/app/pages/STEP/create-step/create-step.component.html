@@ -2,7 +2,7 @@
   <form (ngSubmit)="onSubmit()" #stepForm="ngForm">
     <div class="card">
       <div class="card-header">
-        <h2>Créer un STEP</h2>
+        <h4 class="card-title">Informations de STEP</h4>
       </div>
       <div class="card-body">
         <!-- STEP Information -->
@@ -12,12 +12,75 @@
             id="statut"
             [(ngModel)]="step.statut"
             name="statut"
-            class="form-control"
+            class="form-select"
             required
           >
             <option value="Existant">Existant</option>
             <option value="En cours">En cours</option>
           </select>
+        </div>
+        <!-- Communes Selection -->
+        <div class="form-group">
+          
+          <div class="row">
+
+            <div class="form-group col-md-4"><label for="region">Région :</label>
+            <select
+              name="region"
+              [(ngModel)]="selectedRegion"
+              (change)="onRegionChange()"
+              class="form-select"
+
+            >
+            <!-- <option value="-1">Selectionné la Région</option> -->
+              <option *ngFor="let region of regions" [value]="region.id">
+                {{ region.nom }}
+              </option>
+            </select></div>
+
+            <div class="form-group col-md-4"><label for="province">Province :</label>
+            <select
+            name="province"
+              [(ngModel)]="selectedProvince"
+              (change)="onProvinceChange()"
+              class="form-select"
+
+            >
+              <option *ngFor="let province of provinces" [value]="province.id">
+                {{ province.nom }}
+              </option>
+            </select></div>
+
+            <div class="form-group col-md-4"><label for="commune">Commune :</label>
+            <select
+              name="commune"
+              [(ngModel)]="selectedCommune"
+              class="form-select"
+
+              (change)="addCommune()"
+            >
+              <option *ngFor="let commune of communes" [value]="commune.id">
+                {{ commune.nom }}
+              </option>
+            </select></div>
+
+            <!-- <button type="button" class="btn btn-primary" (click)="addCommune()">
+              Ajouter
+            </button> -->
+          </div>
+          <div class="selected-communes">
+            <span
+              *ngFor="let commune of step.communes"
+              class="badge badge-primary"
+            >
+              {{ commune.nom }}
+              <button
+                type="button"
+                class="btn-close"
+                (click)="removeCommune(commune)"
+              ></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
@@ -26,7 +89,7 @@
             id="milieu"
             [(ngModel)]="step.milieu"
             name="milieu"
-            class="form-control"
+            class="form-select"
             required
           >
             <option value="Urbain">Urbain</option>
@@ -80,7 +143,7 @@
             id="usage"
             [(ngModel)]="step.usage_id"
             name="usage"
-            class="form-control"
+            class="form-select"
             required
           >
             <option *ngFor="let usage of usages" [value]="usage.id">
@@ -89,90 +152,68 @@
           </select>
         </div>
 
-        <!-- Communes Selection -->
-        <div class="form-group">
-          <label>Communes</label>
-          <div class="dynamic-dropdowns">
-            <select
-              [(ngModel)]="selectedRegion"
-              (change)="onRegionChange()"
-              class="form-control"
-            >
-              <option *ngFor="let region of regions" [value]="region.id">
-                {{ region.nom }}
-              </option>
-            </select>
-            <select
-              [(ngModel)]="selectedProvince"
-              (change)="onProvinceChange()"
-              class="form-control"
-              *ngIf="provinces.length > 0"
-            >
-              <option *ngFor="let province of provinces" [value]="province.id">
-                {{ province.nom }}
-              </option>
-            </select>
-            <select
-              [(ngModel)]="selectedCommune"
-              class="form-control"
-              *ngIf="communes.length > 0"
-            >
-              <option *ngFor="let commune of communes" [value]="commune.id">
-                {{ commune.nom }}
-              </option>
-            </select>
-            <button type="button" class="btn btn-primary" (click)="addCommune()">
-              Ajouter
-            </button>
-          </div>
-          <div class="selected-communes">
-            <span
-              *ngFor="let commune of step.communes"
-              class="badge badge-primary"
-            >
-              {{ commune.nom }}
-              <button
-                type="button"
-                class="btn-close"
-                (click)="removeCommune(commune)"
-              ></button>
-            </span>
-          </div>
-        </div>
+
 
         <!-- Additional Fields for En Cours -->
-        <div *ngIf="step.statut === 'En cours'">
-          <h3>Travaux en cours</h3>
-          <div *ngFor="let encours of step.encours; let i = index">
+        <div *ngIf="step.statut === 'En cours'" class=" mt-4">
+          <h4 class="card-title">Les Travaux En Cours</h4>
+
             <div class="form-group">
-              <label>Cout</label>
+              <label for="coutStep">Coût du STEP (DH)</label>
               <input
                 type="number"
-                [(ngModel)]="encours.cout_step"
                 class="form-control"
-                placeholder="Coût"
-                required
+                id="coutStep"
+                [(ngModel)]="encours.cout_step"
+                placeholder="Entrez le coût"
               />
             </div>
             <div class="form-group">
-              <label>Situation Travaux</label>
-              <input
-                type="text"
-                [(ngModel)]="encours.situation_travaux"
+              <label for="situationTravaux">Situation des travaux</label>
+              <textarea
                 class="form-control"
-                placeholder="Description"
-                required
-              />
+                id="situationTravaux"
+                rows="3"
+                [(ngModel)]="encours.situation_travaux"
+                placeholder="Décrivez la situation des travaux"
+              ></textarea>
             </div>
-            <button type="button" (click)="removeEncours(i)" class="btn btn-danger">
+
+
+            <h4 class="card-title">État d'Avancement</h4>
+
+          <div class="form-group" *ngFor="let avancement of etatAvancements; let i = index">
+            <label for="annee-{{ i }}">Année</label>
+            <input
+              type="number"
+              class="form-control"
+              id="annee-{{ i }}"
+              [(ngModel)]="avancement.annee"
+              placeholder="Entrez l'année"
+            />
+            <label for="pourcentage-{{ i }}">Pourcentage</label>
+            <input
+              type="number"
+              class="form-control"
+              id="pourcentage-{{ i }}"
+              [(ngModel)]="avancement.pourcentage"
+              placeholder="Saisir le pourcentage"
+            />
+            <button type="button" class="btn btn-danger mt-2" (click)="removeEtatAvancement(i)">
               Supprimer
             </button>
           </div>
-          <button type="button" (click)="addEncours()" class="btn btn-secondary">
-            Ajouter Travaux
+          <button type="button" class="btn btn-primary mt-3" (click)="addEtatAvancement()">
+            Ajouter Année
           </button>
+
         </div>
+
+
+      <div *ngIf="step.statut === 'En cours'" class="card mt-4">
+
       </div>
+    </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-success">Créer STEP</button>
       </div>

@@ -11,6 +11,7 @@ import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
 import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/create-courrier.component';
 import { CreateStepComponent } from 'app/pages/STEP/create-step/create-step.component';
+import { AllCollectivitesComponent } from 'app/pages/Collectivites/all-collectivites/all-collectivites.component'
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -24,4 +25,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'courriers/type/:nom',        component: CourriersComponent },
     { path: 'create-courriers',        component: CreateCourrierComponent },
     { path: 'ajouter-step',        component: CreateStepComponent },
+    { path: 'collectivites',        component: AllCollectivitesComponent },
 ];

@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-body">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="hierarchy-tree">
+  <!-- Tree Nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <div>
+      <button mat-icon-button matTreeNodeToggle *ngIf="node.expandable">
+        <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+      </button>
+      <span>{{ node.nom }}</span>
+    </div>
+
+    <!-- Add Button for Adding New Nodes -->
+    <div class="add-button" *ngIf="treeControl.isExpanded(node)">
+      <button
+        mat-button
+        color="primary"
+        *ngIf="node.type === 'region'"
+        (click)="openAddDialog('province', node.id)"
+      >
+        + Add Province
+      </button>
+      <button
+        mat-button
+        color="primary"
+        *ngIf="node.type === 'province'"
+        (click)="openAddDialog('commune', node.id)"
+      >
+        + Add Commune
+      </button>
+    </div>
+  </mat-tree-node>
+</mat-tree> 
+
+  </div>
+</div>
+
+
