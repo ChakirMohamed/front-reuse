@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    
+
 
 
 
@@ -36,12 +36,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule.forRoot(AppRoutes,{
       useHash: false
     }),
+    ToastrModule.forRoot({   // Add this for global Toastr configuration
+      timeOut: 3000,         // Toast duration
+      positionClass: 'toast-top-center', // Toast position
+      preventDuplicates: true, // Prevent duplicate toasts
+    }),
     SidebarModule,
     NavbarModule,
-    ToastrModule.forRoot(),
+    //ToastrModule.forRoot(),
     FooterModule,
     FixedPluginModule,
-    HttpClientModule,
+    HttpClientModule ,
     FormsModule,
   ],
   providers: [],

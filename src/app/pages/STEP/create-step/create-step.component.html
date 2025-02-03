@@ -21,7 +21,7 @@
         </div>
         <!-- Communes Selection -->
         <div class="form-group">
-          
+
           <div class="row">
 
             <div class="form-group col-md-4"><label for="region">Région :</label>
@@ -137,20 +137,54 @@
           />
         </div>
 
+
+
+        <!-- Reuse -->
         <div class="form-group">
-          <label for="usage">Usage</label>
+          <label for="reutilise">Réutilisation</label>
           <select
-            id="usage"
-            [(ngModel)]="step.usage_id"
-            name="usage"
+            id="reutilise"
+            [(ngModel)]="step.reutilise"
+            name="reutilise"
             class="form-select"
+            (change)="onReutilisationChange()"
             required
           >
-            <option *ngFor="let usage of usages" [value]="usage.id">
-              {{ usage.nom }}
-            </option>
+            <option [value]="1">Oui</option>
+            <option [value]="0">Non</option>
           </select>
         </div>
+        <div *ngIf="step.reutilise == 1">
+          <div class="form-group">
+            <label for="usage">Usage</label>
+            <select
+              id="usage"
+              [(ngModel)]="step.usage_id"
+              name="usage"
+              class="form-select"
+              required
+            >
+              <option *ngFor="let usage of usages" [value]="usage.id">
+                {{ usage.nom }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="volume_reutiliser">Volume Réutilisé (m³)</label>
+            <input
+              id="volume_reutiliser"
+              type="number"
+              [(ngModel)]="step.volume_reutiliser"
+              name="volume_reutiliser"
+              class="form-control"
+              placeholder="Entrez le volume réutilisé"
+              required
+            />
+          </div>
+        </div>
+
+        
 
 
 
@@ -209,10 +243,6 @@
 
         </div>
 
-
-      <div *ngIf="step.statut === 'En cours'" class="card mt-4">
-
-      </div>
     </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-success">Créer STEP</button>

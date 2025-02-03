@@ -3,7 +3,7 @@ import { StepService } from '../../../services/step.service'
 import {  CommuneService } from '../../../services/collectivites/commune.service';
 import { RegionService } from '../../../services/collectivites/region.service';
 import { ProvinceService,} from '../../../services/collectivites/province.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-step',
   templateUrl: './create-step.component.html',
@@ -17,6 +17,9 @@ export class CreateStepComponent implements OnInit {
     procede: '',
     capacite: '',
     communes: [],
+    reutilise: 0, // Default: Non réutilisée
+    volume_reutiliser: null,
+    usage_id: null,
 
   };
   encours: any = {
@@ -39,7 +42,8 @@ export class CreateStepComponent implements OnInit {
     private stepService: StepService,
     private regionService: RegionService,
     private provinceService: ProvinceService,
-    private communeService: CommuneService
+    private communeService: CommuneService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -52,6 +56,7 @@ export class CreateStepComponent implements OnInit {
       .getProvincesByRegionId(this.selectedRegion)
       .subscribe((data) => (this.provinces = data));
     this.communes = [];
+
   }
 
   onProvinceChange() {
@@ -64,7 +69,7 @@ export class CreateStepComponent implements OnInit {
   addCommune() {
     if (this.selectedCommune) {
       const commune = this.communes.find((c) => c.id === this.selectedCommune);
-      this.step.communes.push(commune);
+      this.step.communes.push(commune.id);
       this.onRegionChange();
     }
   }
@@ -87,14 +92,45 @@ export class CreateStepComponent implements OnInit {
   removeEncours(index: number) {
     this.step.encours.splice(index, 1);
   }
+  onReutilisationChange() {
+    if (this.step.reutilise == 0) {
+      this.step.usage_id = null;
+      this.step.volume_reutiliser = null;
+    }
+  }
+
 
   onSubmit() {
-    console.log(this.step);
-    return;
+
     if (this.step.statut === 'En cours') {
       this.encours.etat_avancements = this.etatAvancements;
       this.step.encours = this.encours; // Ajoute l'en cours s'il est défini
     }
+    // Ensure data integrity before sending to API
+    if (this.step.reutilise == 0) {
+      delete this.step.usage_id;
+      delete this.step.volume_reutiliser;
+    }
+    // console.log(this.step);
+    // console.log(this.step.communes);
+    // console.log(typeof( this.step.commune));
+    if(this.step.communes.length<=0){this.toastr.error('Choisir les Communes de la STEP !', '');return}
+    if(this.step.operateur.trim()==""){this.toastr.error('Saisir operateur !', '');return}
+
+    console.log(this.step)
+    return;
+    this.stepService.createStep(this.step).subscribe(
+      (response) => {
+        console.log('STEP créé avec succès !', response);
+        // Show a success toast
+        this.toastr.success('Step created successfully!', 'Success');
+      },
+      (error) => {
+        console.error('Error while creating step:', error);
+        // Show an error toast
+        this.toastr.error('Failed to create step.', 'Error');
+      }
+    );
     this.stepService.createStep(this.step).subscribe((response) => {
       console.log('STEP créé avec succès !', response);
     });
