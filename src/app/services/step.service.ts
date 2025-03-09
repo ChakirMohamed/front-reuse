@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class StepService {
-  private readonly basePath = '/steps';
+  private readonly basePath = 'steps';
 
   constructor(private apiService: ApiService) {}
 
@@ -63,5 +63,19 @@ export class StepService {
    */
   getUsages(): Observable<any> {
     return this.apiService.get('usages');
+  }
+
+  /**
+   * Get STEPs by status and region
+   * @param status The status of the STEP (Existant/En cours)
+   * @param regionId The ID of the region to filter by
+   */
+  getStepsByStatusAndRegion(status: string, regionId: number | null): Observable<any> {
+    // Build query parameters to send with the request
+    let url = `${this.basePath}filter?status=${status}`;
+    if (regionId !== null) {
+      url += `&regionId=${regionId}`;
+    }
+    return this.apiService.get(url);
   }
 }

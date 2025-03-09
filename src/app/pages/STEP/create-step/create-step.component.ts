@@ -25,9 +25,9 @@ export class CreateStepComponent implements OnInit {
   encours: any = {
     cout_step: null,
     situation_travaux: '',
-    etat_avancements: [],
+    etat_avancement: [],
   };
-  etatAvancements: any[] = [];
+  etatAvancement: any[] = [];
 
   regions: any[] = [];
   provinces: any[] = [];
@@ -69,7 +69,7 @@ export class CreateStepComponent implements OnInit {
   addCommune() {
     if (this.selectedCommune) {
       const commune = this.communes.find((c) => c.id === this.selectedCommune);
-      this.step.communes.push(commune.id);
+      this.step.communes.push(commune);
       this.onRegionChange();
     }
   }
@@ -82,11 +82,11 @@ export class CreateStepComponent implements OnInit {
   //   this.step.encours.push({ cout_step: 0, situation_travaux: '' });
   // }
   addEtatAvancement() {
-    this.etatAvancements.push({ annee: null, pourcentage: null });
+    this.etatAvancement.push({ annee: null, pourcentage: null });
   }
 
   removeEtatAvancement(index: number) {
-    this.etatAvancements.splice(index, 1);
+    this.etatAvancement.splice(index, 1);
   }
 
   removeEncours(index: number) {
@@ -103,22 +103,23 @@ export class CreateStepComponent implements OnInit {
   onSubmit() {
 
     if (this.step.statut === 'En cours') {
-      this.encours.etat_avancements = this.etatAvancements;
-      this.step.encours = this.encours; // Ajoute l'en cours s'il est défini
+      this.encours.etat_avancement = this.etatAvancement;
+      this.step.encours = [this.encours]; // Ajoute l'en cours s'il est défini
     }
     // Ensure data integrity before sending to API
     if (this.step.reutilise == 0) {
-      delete this.step.usage_id;
-      delete this.step.volume_reutiliser;
+       this.step.usage_id=null;
+       this.step.volume_reutiliser=null;
     }
     // console.log(this.step);
     // console.log(this.step.communes);
     // console.log(typeof( this.step.commune));
     if(this.step.communes.length<=0){this.toastr.error('Choisir les Communes de la STEP !', '');return}
+    this.step.communesId = this.step.communes.map(commune => commune.id);
     if(this.step.operateur.trim()==""){this.toastr.error('Saisir operateur !', '');return}
 
     console.log(this.step)
-    return;
+
     this.stepService.createStep(this.step).subscribe(
       (response) => {
         console.log('STEP créé avec succès !', response);
@@ -131,8 +132,8 @@ export class CreateStepComponent implements OnInit {
         this.toastr.error('Failed to create step.', 'Error');
       }
     );
-    this.stepService.createStep(this.step).subscribe((response) => {
-      console.log('STEP créé avec succès !', response);
-    });
+    // this.stepService.createStep(this.step).subscribe((response) => {
+    //   console.log('STEP créé avec succès !', response);
+    // });
   }
 }

@@ -13,6 +13,7 @@ import { IconsComponent }           from '../../pages/icons/icons.component';
 // import { MapsComponent }            from '../../pages/maps/maps.component';
 import { NotificationsComponent }   from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component';
+import { ListStepsComponent }         from '../../pages/STEP/list-steps/list-steps.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
@@ -27,6 +28,12 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatInputModule } from '@angular/material/input';
 import { AddEntityDialogComponent } from '../../pages/Collectivites/add-entity-dialog/add-entity-dialog.component';
 import { AllCollectivitesComponent } from '../../pages/Collectivites/all-collectivites/all-collectivites.component';
+
+// Import Angular Material Modules
+
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -46,7 +53,9 @@ import {MatDividerModule} from '@angular/material/divider';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,MatTableModule,MatCardModule,
+
   ],
   declarations: [
     DashboardComponent,
@@ -61,7 +70,9 @@ import {MatDividerModule} from '@angular/material/divider';
     CreateCourrierComponent,
     CreateStepComponent,
     AddEntityDialogComponent,
-    AllCollectivitesComponent
+    AllCollectivitesComponent,
+    ListStepsComponent,
+
   ]
 })
 

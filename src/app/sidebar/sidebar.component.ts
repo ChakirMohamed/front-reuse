@@ -20,10 +20,17 @@ export const ROUTES: RouteInfo[] = [
         expanded: false,
         children: [], // Start with an empty array, to be populated dynamically
     },
-
+    {
+      path: '/steps',
+      title: 'STEPs',
+      icon: 'nc-atom',
+      class: '',
+      expanded: false,
+      children: [], // Start with an empty array, to be populated dynamically
+  },
     /* Add other menu items here if necessary */
 
-    { path: '/ajouter-step',         title: 'Ajouter STEP',             icon:'nc-atom',    class: '' },
+    //{ path: '/ajouter-step',         title: 'Ajouter STEP',             icon:'nc-atom',    class: '' },
     { path: '/collectivites',         title: ' Collectivités',             icon:'nc-world-2',    class: '' },
     { path: '/icons',         title: 'Icons',             icon:'nc-diamond',    class: '' },
     // { path: '/maps',          title: 'Maps',              icon:'nc-pin-3',      class: '' },
@@ -74,6 +81,16 @@ export class SidebarComponent implements OnInit {
                 }
             );
         }
+
+        const stepsMenu = this.menuItems.find((item) => item.path === '/steps');
+        if (stepsMenu) {
+
+          stepsMenu.children = [
+            {path: `/ajouter-step`,title: 'Ajouter',class: '',icon:null},
+            {path: `/list-steps`,title: 'Afficher',class: '',icon:null},
+          ]
+
+      }
     }
 }
 

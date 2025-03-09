@@ -184,7 +184,7 @@
           </div>
         </div>
 
-        
+
 
 
 
@@ -216,7 +216,7 @@
 
             <h4 class="card-title">État d'Avancement</h4>
 
-          <div class="form-group" *ngFor="let avancement of etatAvancements; let i = index">
+          <div class="form-group border p-3" *ngFor="let avancement of etatAvancement; let i = index">
             <label for="annee-{{ i }}">Année</label>
             <input
               type="number"
@@ -237,8 +237,9 @@
               Supprimer
             </button>
           </div>
-          <button type="button" class="btn btn-primary mt-3" (click)="addEtatAvancement()">
-            Ajouter Année
+
+          <button type="button" class="btn btn-link mt-3" (click)="addEtatAvancement()">
+            <i class="nc-icon nc-simple-add"></i> Ajouter Année
           </button>
 
         </div>

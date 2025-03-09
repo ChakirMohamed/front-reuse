@@ -1,0 +1,95 @@
+<div class="list-steps-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>List of Steps</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="filters">
+        <!-- Status Filter -->
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusChange()">
+            <mat-option value="Existant">Existant</mat-option>
+            <mat-option value="En cours">En cours</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Region Filter -->
+        <mat-form-field appearance="fill">
+          <mat-label>Region</mat-label>
+          <mat-select [(value)]="selectedRegion" (selectionChange)="onRegionChange()">
+            <mat-option value="">All Regions</mat-option>
+            <mat-option *ngFor="let region of regions" [value]="region.id">
+              {{ region.nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Steps Table -->
+      <mat-table [dataSource]="steps" class="mat-elevation-z8">
+        <ng-container matColumnDef="region">
+          <mat-header-cell *matHeaderCellDef> Region </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.region }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="province">
+          <mat-header-cell *matHeaderCellDef> Province </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.province }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="communes">
+          <mat-header-cell *matHeaderCellDef> Communes </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.communes.join(', ') }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="milieu">
+          <mat-header-cell *matHeaderCellDef> Milieu </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.milieu }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="operateur">
+          <mat-header-cell *matHeaderCellDef> Opérateur </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.operateur }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="procede">
+          <mat-header-cell *matHeaderCellDef> Procédé </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.procede }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="capacite">
+          <mat-header-cell *matHeaderCellDef> Capacité m³/j </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.capacite }} </mat-cell>
+        </ng-container>
+
+        <!-- Additional columns for "En cours" -->
+        <ng-container matColumnDef="cout">
+          <mat-header-cell *matHeaderCellDef> Coût du STEP </mat-header-cell>
+          <ng-container *ngIf="selectedStatus === 'En cours'">
+            <mat-cell *matCellDef="let step"> {{ step.cout }} </mat-cell>
+          </ng-container>
+        </ng-container>
+
+        <ng-container matColumnDef="situation_travaux">
+          <mat-header-cell *matHeaderCellDef> Situation des travaux </mat-header-cell>
+          <ng-container *ngIf="selectedStatus === 'En cours'">
+            <mat-cell *matCellDef="let step"> {{ step.situation_travaux }} </mat-cell>
+          </ng-container>
+        </ng-container>
+
+        <ng-container matColumnDef="etat_avancement">
+          <mat-header-cell *matHeaderCellDef> État d'avancement </mat-header-cell>
+          <ng-container *ngIf="selectedStatus === 'En cours'">
+            <mat-cell *matCellDef="let step"> {{ step.etat_avancement }} </mat-cell>
+          </ng-container>
+        </ng-container>
+
+
+        <!-- Table Header and Footer -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
+</div>
