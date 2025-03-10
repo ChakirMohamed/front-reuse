@@ -1,7 +1,7 @@
 <div class="list-steps-container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>List of Steps</mat-card-title>
+      <mat-card-title>  </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="filters">
@@ -18,7 +18,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Region</mat-label>
           <mat-select [(value)]="selectedRegion" (selectionChange)="onRegionChange()">
-            <mat-option value="">All Regions</mat-option>
+            <mat-option value="">Tous les Regions</mat-option>
             <mat-option *ngFor="let region of regions" [value]="region.id">
               {{ region.nom }}
             </mat-option>
@@ -30,17 +30,17 @@
       <mat-table [dataSource]="steps" class="mat-elevation-z8">
         <ng-container matColumnDef="region">
           <mat-header-cell *matHeaderCellDef> Region </mat-header-cell>
-          <mat-cell *matCellDef="let step"> {{ step.region }} </mat-cell>
+          <mat-cell *matCellDef="let step"> {{ step.region_nom }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="province">
           <mat-header-cell *matHeaderCellDef> Province </mat-header-cell>
-          <mat-cell *matCellDef="let step"> {{ step.province }} </mat-cell>
+          <mat-cell *matCellDef="let step"> {{ step.province_nom }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="communes">
           <mat-header-cell *matHeaderCellDef> Communes </mat-header-cell>
-          <mat-cell *matCellDef="let step"> {{ step.communes.join(', ') }} </mat-cell>
+          <mat-cell *matCellDef="let step"> <span *ngFor="let commune of step.communes">{{ commune.nom }}</span> </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="milieu">
@@ -67,21 +67,21 @@
         <ng-container matColumnDef="cout">
           <mat-header-cell *matHeaderCellDef> Coût du STEP </mat-header-cell>
           <ng-container *ngIf="selectedStatus === 'En cours'">
-            <mat-cell *matCellDef="let step"> {{ step.cout }} </mat-cell>
+            <mat-cell *matCellDef="let step"> {{ step.encours[0].cout_step }} </mat-cell>
           </ng-container>
         </ng-container>
 
         <ng-container matColumnDef="situation_travaux">
           <mat-header-cell *matHeaderCellDef> Situation des travaux </mat-header-cell>
           <ng-container *ngIf="selectedStatus === 'En cours'">
-            <mat-cell *matCellDef="let step"> {{ step.situation_travaux }} </mat-cell>
+            <mat-cell *matCellDef="let step"> {{ step.encours[0].situation_travaux }} </mat-cell>
           </ng-container>
         </ng-container>
 
         <ng-container matColumnDef="etat_avancement">
           <mat-header-cell *matHeaderCellDef> État d'avancement </mat-header-cell>
           <ng-container *ngIf="selectedStatus === 'En cours'">
-            <mat-cell *matCellDef="let step"> {{ step.etat_avancement }} </mat-cell>
+            <mat-cell *matCellDef="let step"> {{ step.encours[0].etat_avancement }} </mat-cell>
           </ng-container>
         </ng-container>
 

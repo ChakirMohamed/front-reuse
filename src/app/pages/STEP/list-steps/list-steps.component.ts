@@ -39,6 +39,7 @@ export class ListStepsComponent implements OnInit {
     this.stepService.getStepsByStatusAndRegion(this.selectedStatus, regionId).subscribe(
       (data) => {
         this.steps = data;
+        console.log(this.steps);
       },
       (error) => {
         this.toastr.error('Failed to load steps', 'Error');
