@@ -28,6 +28,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatInputModule } from '@angular/material/input';
 import { AddEntityDialogComponent } from '../../pages/Collectivites/add-entity-dialog/add-entity-dialog.component';
 import { AllCollectivitesComponent } from '../../pages/Collectivites/all-collectivites/all-collectivites.component';
+import { StepShowModalComponent } from '../../pages/STEP/step-show-modal/step-show-modal/step-show-modal.component';
 
 // Import Angular Material Modules
 
@@ -72,7 +73,7 @@ import {MatDividerModule} from '@angular/material/divider';
     AddEntityDialogComponent,
     AllCollectivitesComponent,
     ListStepsComponent,
-
+    StepShowModalComponent,
   ]
 })
 

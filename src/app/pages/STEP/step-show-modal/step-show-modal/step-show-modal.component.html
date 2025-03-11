@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Step Details</h2>
+<mat-dialog-content>
+  <div><strong>Region:</strong> {{ selectedStep.region_nom }}</div>
+  <div><strong>Province:</strong> {{ selectedStep.province_nom }}</div>
+  <div><strong>Commune:</strong> {{ communesString }}</div>
+  <div><strong>Milieu:</strong> {{ selectedStep.milieu }}</div>
+  <div><strong>Operateur:</strong> {{ selectedStep.operateur }}</div>
+  <div><strong>Procédé:</strong> {{ selectedStep.procede }}</div>
+  <div><strong>Capacité:</strong> {{ selectedStep.capacite }}</div>
+  <div><strong>Coût du STEP:</strong> {{ selectedStep.encours[0].cout_step }}</div>
+  <div><strong>Situation des travaux:</strong> {{ selectedStep.encours[0].situation_travaux }}</div>
+  <div><strong>État d'avancement:</strong>
+    <div *ngFor="let etat of selectedStep.encours[0].etat_avancement">
+      <div>{{ etat.annee }}: {{ etat.pourcentage }}%</div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="print()">Print</button>
+</mat-dialog-actions>

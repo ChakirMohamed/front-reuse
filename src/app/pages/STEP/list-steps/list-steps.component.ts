@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StepService } from '../../../services/step.service';
 import { RegionService } from '../../../services/collectivites/region.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { StepShowModalComponent } from '../step-show-modal/step-show-modal/step-show-modal.component';
 
 @Component({
   selector: 'app-list-steps',
@@ -16,7 +18,7 @@ export class ListStepsComponent implements OnInit {
   steps: any[] = []; // Holds filtered steps
   displayedColumns: string[] = []; // Holds column names to display
 
-  constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService) {}
+  constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService, public dialog: MatDialog ) {}
 
   ngOnInit(): void {
     this.loadRegions();
@@ -62,13 +64,25 @@ export class ListStepsComponent implements OnInit {
   updateDisplayedColumns() {
     if (this.selectedStatus === 'Existant') {
       this.displayedColumns = [
-        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite'
+        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite','actions'
       ];
     } else if (this.selectedStatus === 'En cours') {
       this.displayedColumns = [
         'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite',
-        'cout', 'situation_travaux', 'etat_avancement'
+        'cout', 'situation_travaux', 'etat_avancement','actions'
       ];
     }
+  }
+
+  //show modal
+  openShowModal(step: any): void {
+    const dialogRef = this.dialog.open(StepShowModalComponent, {
+      width: '80%', // Modal width
+      data: { step }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

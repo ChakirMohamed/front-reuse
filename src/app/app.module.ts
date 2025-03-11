@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
+
 //import { CourriersComponent } from './pages/courriers/courriers.component';
 
 
@@ -27,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+
 
 
 

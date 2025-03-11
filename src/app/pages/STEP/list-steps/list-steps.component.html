@@ -85,6 +85,22 @@
           </ng-container>
         </ng-container>
 
+        <!-- actions icon -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let step">
+            <!-- Action icons for Show, Edit, Delete -->
+            <button mat-icon-button (click)="openShowModal(step)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button (click)="editStep(step)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteStep(step)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
 
         <!-- Table Header and Footer -->
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
