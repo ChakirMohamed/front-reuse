@@ -8,26 +8,58 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class StepShowModalComponent {
   selectedStep: any;
-  communesString: string;  // Add this property
+  communesString: string;
+  displayedColumns: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<StepShowModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.selectedStep = data.step;
+    this.selectedStep = data.step;  // Receive step data
     this.communesString = this.formatCommunes(this.selectedStep.communes); // Format communes here
+    this.setDisplayedColumns();  // Set columns based on status
+    console.log(this.selectedStep);
   }
 
+  // Close the modal
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  // Set columns based on selected status
+  setDisplayedColumns(): void {
+    if (this.selectedStep.statut === 'Existant') {
+      this.displayedColumns = [
+        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite',
+        'date_mise_en_service'
+      ];
+    } else if (this.selectedStep.statut === 'En cours') {
+      this.displayedColumns = [
+        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite',
+        'cout', 'situation_travaux', 'etat_avancement'
+      ];
+    }
+  }
+
+  // Format communes array into a comma-separated string
+  formatCommunes(communes: any[]): string {
+    return communes.map(commune => commune.nom).join(', ');
+  }
+
+  // Print function (trigger print dialog)
   print(): void {
     window.print();
   }
 
-  // Function to format the communes into a string
-  formatCommunes(communes: any[]): string {
-    return communes.map(commune => commune.nom).join(', ');
+  // Edit button handler (add your logic here)
+  onEdit(): void {
+    console.log('Edit clicked');
+    // Add your edit logic here
+  }
+
+  // Delete button handler (add your logic here)
+  onDelete(): void {
+    console.log('Delete clicked');
+    // Add your delete logic here
   }
 }

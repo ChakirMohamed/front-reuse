@@ -1,22 +1,99 @@
-<h2 mat-dialog-title>Step Details</h2>
 <mat-dialog-content>
-  <div><strong>Region:</strong> {{ selectedStep.region_nom }}</div>
-  <div><strong>Province:</strong> {{ selectedStep.province_nom }}</div>
-  <div><strong>Commune:</strong> {{ communesString }}</div>
-  <div><strong>Milieu:</strong> {{ selectedStep.milieu }}</div>
-  <div><strong>Operateur:</strong> {{ selectedStep.operateur }}</div>
-  <div><strong>Procédé:</strong> {{ selectedStep.procede }}</div>
-  <div><strong>Capacité:</strong> {{ selectedStep.capacite }}</div>
-  <div><strong>Coût du STEP:</strong> {{ selectedStep.encours[0].cout_step }}</div>
-  <div><strong>Situation des travaux:</strong> {{ selectedStep.encours[0].situation_travaux }}</div>
-  <div><strong>État d'avancement:</strong>
-    <div *ngFor="let etat of selectedStep.encours[0].etat_avancement">
-      <div>{{ etat.annee }}: {{ etat.pourcentage }}%</div>
+  <div class="table-container">
+    <!-- Header with Logo and Title -->
+    <div class="header">
+      <img src="assets/img/dgct fr .png" alt="Logo">
+      <h1 mat-dialog-title>STEP Détails</h1>
+    </div>
+
+    <!-- Table for displaying step details -->
+    <table>
+      <tbody>
+        <!-- Region -->
+        <tr *ngIf="displayedColumns.includes('region')">
+          <th><strong>Région:</strong></th>
+          <td>{{ selectedStep.region_nom }}</td>
+        </tr>
+
+        <!-- Province -->
+        <tr *ngIf="displayedColumns.includes('province')">
+          <th><strong>Province:</strong></th>
+          <td>{{ selectedStep.province_nom }}</td>
+        </tr>
+
+        <!-- Commune -->
+        <tr *ngIf="displayedColumns.includes('communes')">
+          <th><strong>Commune:</strong></th>
+          <td>{{ communesString }}</td>
+        </tr>
+
+        <!-- Milieu -->
+        <tr *ngIf="displayedColumns.includes('milieu')">
+          <th><strong>Milieu:</strong></th>
+          <td>{{ selectedStep.milieu }}</td>
+        </tr>
+
+        <!-- Operateur -->
+        <tr *ngIf="displayedColumns.includes('operateur')">
+          <th><strong>Operateur:</strong></th>
+          <td>{{ selectedStep.operateur }}</td>
+        </tr>
+
+        <!-- Procédé -->
+        <tr *ngIf="displayedColumns.includes('procede')">
+          <th><strong>Procédé:</strong></th>
+          <td>{{ selectedStep.procede }}</td>
+        </tr>
+
+        <!-- Capacité -->
+        <tr *ngIf="displayedColumns.includes('capacite')">
+          <th><strong>Capacité:</strong></th>
+          <td>{{ selectedStep.capacite }}</td>
+        </tr>
+
+        <!-- Date de mise en service -->
+        <tr *ngIf="displayedColumns.includes('date_mise_en_service')">
+          <th><strong>Date de mise en service:</strong></th>
+          <td>{{ selectedStep.date_mise_en_service || '-' }}</td>
+        </tr>
+
+        <!-- Coût du STEP (for 'En cours' status) -->
+        <tr *ngIf="displayedColumns.includes('cout')">
+          <th><strong>Coût du STEP:</strong></th>
+          <td>{{ selectedStep.encours[0]?.cout_step }}</td>
+        </tr>
+
+        <!-- Situation des travaux (for 'En cours' status) -->
+        <tr *ngIf="displayedColumns.includes('situation_travaux')">
+          <th><strong>Situation des travaux:</strong></th>
+          <td>{{ selectedStep.encours[0]?.situation_travaux }}</td>
+        </tr>
+
+        <!-- État d'avancement (for 'En cours' status) -->
+        <tr *ngIf="displayedColumns.includes('etat_avancement')">
+          <th><strong>État d'avancement:</strong></th>
+          <td>
+            <div *ngFor="let etat of selectedStep.encours[0]?.etat_avancement">
+              {{ etat.annee }}: {{ etat.pourcentage }}%
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- Display volume_reutiliser if 'Existant' and reutilise is '1' -->
+    <div *ngIf="selectedStep.statut === 'Existant' && selectedStep.reutilise === '1'" class="volume-reutiliser-section">
+      
+      <h3><strong>Volume Réutilisé:</strong> {{ selectedStep.volume_reutiliser || 'Non spécifié' }}</h3>
+      <h3 *ngIf="selectedStep.usages?.length > 0"><strong>Usage:</strong> {{selectedStep.usages[0].nom || 'Non spécifié' }}</h3>
     </div>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="print()">Print</button>
+  <button mat-button (click)="onNoClick()">Fermer</button>
+  <button mat-button (click)="print()">Imprimer</button>
+  <button mat-button (click)="onEdit()">Modifier</button>
+  <button mat-button (click)="onDelete()">Supprimer</button>
 </mat-dialog-actions>
