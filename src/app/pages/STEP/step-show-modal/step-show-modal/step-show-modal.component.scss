@@ -143,7 +143,19 @@ mat-dialog-actions {
   border-radius: 5px;
   border: 1px solid #ddd;
 }
+@media print {
+  .sidebar {
+    display: none !important;
+  }
 
+  .mat-dialog-actions {
+    display: none !important;
+  }
+
+  .header img {
+    width: 100px; /* Adjust the logo size for printing */
+  }
+}
 
 
 
