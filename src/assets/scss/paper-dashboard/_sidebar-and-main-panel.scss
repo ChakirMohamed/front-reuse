@@ -359,3 +359,8 @@
 .panel-header-lg{
   height: 380px
 }
+@media print {
+  .sidebar {
+    display: none !important;
+  }
+}
