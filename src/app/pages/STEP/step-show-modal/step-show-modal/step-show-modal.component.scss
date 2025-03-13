@@ -1,18 +1,18 @@
-::ng-deep .mat-dialog-container {
-  position: fixed !important; /* Ensure the modal is fixed on the screen */
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important; /* Center it */
-  z-index: 1029 !important; /* Ensure it's above the sidebar */
-  width: 90% !important; /* Adjust the width */
-  max-width: 800px; /* Set a max-width */
-  max-height: 90vh; /* Limit max height to 80% of the viewport height */
-  //overflow-y: auto; /* Add scrolling if content overflows */
-  padding: 20px; /* Add padding to avoid the content sticking to the edges */
-  border-radius: 8px; /* Optional: rounded corners */
-  background-color: #fff; /* White background */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for better appearance */
-}
+  ::ng-deep .mat-dialog-container {
+    position: fixed !important; /* Ensure the modal is fixed on the screen */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Center it */
+    z-index: 1029 !important; /* Ensure it's above the sidebar */
+    width: 90% !important; /* Adjust the width */
+    max-width: 800px; /* Set a max-width */
+    max-height: 90vh; /* Limit max height to 80% of the viewport height */
+    //overflow-y: auto; /* Add scrolling if content overflows */
+    padding: 20px; /* Add padding to avoid the content sticking to the edges */
+    border-radius: 8px; /* Optional: rounded corners */
+    background-color: #fff; /* White background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for better appearance */
+  }
 
 .header img {
   display: block;
@@ -153,8 +153,51 @@ mat-dialog-actions {
   }
 
   .header img {
-    width: 100px; /* Adjust the logo size for printing */
+    width: 40%; /* Adjust the logo size for printing */
   }
+  table {
+
+    border-collapse: collapse;
+    font-size: 12px; /* Adjust the font size for printing */
+  }
+
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  table th {
+    color: black !important;
+  }
+
+  ::ng-deep .mat-dialog-container {
+    position: fixed !important; /* Ensure the modal is fixed on the screen */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Center it */
+    z-index: 1029 !important; /* Ensure it's above the sidebar */
+    width: 90% !important; /* Adjust the width */
+    max-width: 800px; /* Set a max-width */
+    max-height: 90vh; /* Limit max height to 80% of the viewport height */
+    //overflow-y: auto; /* Add scrolling if content overflows */
+    padding: 20px; /* Add padding to avoid the content sticking to the edges */
+    border-radius: 0px; /* Optional: rounded corners */
+    background-color: #fff; /* White background */
+    box-shadow: none;
+    overflow: hidden;
+  }
+  body {
+    -webkit-print-color-adjust: exact; /* Ensure proper printing */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  @page {
+    size: A4;
+    margin: 20mm;
+    margin: 0;
+  }
+
+
 }
 
 

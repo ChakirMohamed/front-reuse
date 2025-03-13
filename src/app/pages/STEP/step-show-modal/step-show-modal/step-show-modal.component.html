@@ -3,7 +3,7 @@
     <!-- Header with Logo and Title -->
     <div class="header">
       <img src="assets/img/dgct fr .png" alt="Logo">
-      <h1 mat-dialog-title>STEP Détails</h1>
+      <h1 mat-dialog-title>STATION D'EPURATION </h1>
     </div>
 
     <!-- Table for displaying step details -->
@@ -84,7 +84,7 @@
 
     <!-- Display volume_reutiliser if 'Existant' and reutilise is '1' -->
     <div *ngIf="selectedStep.statut === 'Existant' && selectedStep.reutilise === '1'" class="volume-reutiliser-section">
-      
+
       <h3><strong>Volume Réutilisé:</strong> {{ selectedStep.volume_reutiliser || 'Non spécifié' }}</h3>
       <h3 *ngIf="selectedStep.usages?.length > 0"><strong>Usage:</strong> {{selectedStep.usages[0].nom || 'Non spécifié' }}</h3>
     </div>
