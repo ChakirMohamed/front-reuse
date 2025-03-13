@@ -8576,7 +8576,7 @@ img {
     display: block; }
     .sidebar .nav .caret,
     .off-canvas-sidebar .nav .caret {
-      top: 14px;
+      top: 25px;
       position: absolute;
       right: 10px; }
     .sidebar .nav li > a + div .nav li > a,

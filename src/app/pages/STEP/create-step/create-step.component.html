@@ -6,7 +6,42 @@
       </div>
       <div class="card-body">
         <!-- STEP Information -->
-        <div class="form-group">
+
+
+        <div class="form-group row">
+          <!-- Statut Selection -->
+          <div class="form-group" [ngClass]="step.statut === 'Existant' ? 'col-md-8' : 'col-md-12'">
+            <label for="statut">Statut</label>
+            <select
+              id="statut"
+              [(ngModel)]="step.statut"
+              name="statut"
+              class="form-select"
+              required
+
+            >
+              <option value="Existant">Existant</option>
+              <option value="En cours">En cours</option>
+            </select>
+          </div>
+
+          <!-- Conditionally show "Date de mise en service" if statut is "Existant" -->
+          <div *ngIf="step.statut === 'Existant'" class="form-group col-md-4">
+            <label for="date_mise_en_service">Année de mise en service</label>
+            <select
+              id="date_mise_en_service"
+              [(ngModel)]="step.date_mise_en_service"
+              name="date_mise_en_service"
+              class="form-select"
+            >
+              <option value="" selected>Sélectionnez une année</option>
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <!-- <div class="form-group">
           <label for="statut">Statut</label>
           <select
             id="statut"
@@ -18,7 +53,11 @@
             <option value="Existant">Existant</option>
             <option value="En cours">En cours</option>
           </select>
-        </div>
+        </div> -->
+
+
+
+
         <!-- Communes Selection -->
         <div class="form-group">
 
@@ -30,7 +69,7 @@
               [(ngModel)]="selectedRegion"
               (change)="onRegionChange()"
               class="form-select"
-
+              [disabled]="step.communes.length > 0"
             >
             <!-- <option value="-1">Selectionné la Région</option> -->
               <option *ngFor="let region of regions" [value]="region.id">
@@ -44,7 +83,7 @@
               [(ngModel)]="selectedProvince"
               (change)="onProvinceChange()"
               class="form-select"
-
+              [disabled]="step.communes.length > 0"
             >
               <option *ngFor="let province of provinces" [value]="province.id">
                 {{ province.nom }}

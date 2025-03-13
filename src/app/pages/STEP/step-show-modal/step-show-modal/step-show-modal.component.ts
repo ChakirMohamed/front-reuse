@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class StepShowModalComponent {
   selectedStep: any;
-  communesString: string;
+  //communesString: string;
   displayedColumns: string[] = [];
 
   constructor(
@@ -16,7 +16,7 @@ export class StepShowModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.selectedStep = data.step;  // Receive step data
-    this.communesString = this.formatCommunes(this.selectedStep.communes); // Format communes here
+    //this.communesString = this.formatCommunes(this.selectedStep.communes); // Format communes here
     this.setDisplayedColumns();  // Set columns based on status
     console.log(this.selectedStep);
   }
@@ -42,9 +42,9 @@ export class StepShowModalComponent {
   }
 
   // Format communes array into a comma-separated string
-  formatCommunes(communes: any[]): string {
-    return communes.map(commune => commune.nom).join(', ');
-  }
+  // formatCommunes(communes: any[]): string {
+  //   return communes.map(commune => commune.nom).join(', ');
+  // }
 
   // Print function (trigger print dialog)
   print(): void {

@@ -1,9 +1,8 @@
 <div class="list-steps-container">
   <mat-card>
+
+    
     <mat-card-header>
-      <mat-card-title>  </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
       <div class="filters">
         <!-- Status Filter -->
         <mat-form-field appearance="fill">
@@ -25,6 +24,12 @@
           </mat-select>
         </mat-form-field>
       </div>
+    </mat-card-header>
+
+
+
+    <mat-card-content>
+
 
       <!-- Steps Table -->
       <mat-table [dataSource]="steps" class="mat-elevation-z8">
@@ -40,7 +45,11 @@
 
         <ng-container matColumnDef="communes">
           <mat-header-cell *matHeaderCellDef> Communes </mat-header-cell>
-          <mat-cell *matCellDef="let step"> <span *ngFor="let commune of step.communes">{{ commune.nom }}</span> </mat-cell>
+          <mat-cell *matCellDef="let step">
+
+                {{ step.communes}}
+
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="milieu">
@@ -61,6 +70,11 @@
         <ng-container matColumnDef="capacite">
           <mat-header-cell *matHeaderCellDef> Capacité m³/j </mat-header-cell>
           <mat-cell *matCellDef="let step"> {{ step.capacite }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="date_mise_en_service">
+          <mat-header-cell *matHeaderCellDef> Année </mat-header-cell>
+          <mat-cell *matCellDef="let step"> {{ step.date_mise_en_service || "-" }} </mat-cell>
         </ng-container>
 
         <!-- Additional columns for "En cours" -->

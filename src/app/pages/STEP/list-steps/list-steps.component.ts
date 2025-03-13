@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StepService } from '../../../services/step.service';
 import { RegionService } from '../../../services/collectivites/region.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { StepShowModalComponent } from '../step-show-modal/step-show-modal/step-
   templateUrl: './list-steps.component.html',
   styleUrls: ['./list-steps.component.scss'],
 })
+
 export class ListStepsComponent implements OnInit {
   selectedStatus: string = 'Existant';
   selectedRegion: number | null = null;
@@ -17,7 +18,7 @@ export class ListStepsComponent implements OnInit {
   regions: any[] = []; // Holds all regions
   steps: any[] = []; // Holds filtered steps
   displayedColumns: string[] = []; // Holds column names to display
-
+  communesjoin: any = "";
   constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService, public dialog: MatDialog ) {}
 
   ngOnInit(): void {
@@ -40,17 +41,24 @@ export class ListStepsComponent implements OnInit {
     const regionId = this.selectedRegion ? this.selectedRegion : null;
     this.stepService.getStepsByStatusAndRegion(this.selectedStatus, regionId).subscribe(
       (data) => {
-        this.steps = data;
-        console.log(this.steps);
+        this.steps = data.map(step => {
+          // Check if communes is an array of objects and join the 'nom' property
+          if (Array.isArray(step.communes)) {
+            step.communes = step.communes.map(commune => commune.nom).join(', '); // Join 'nom' property
+          }
+          return step;
+        });
+        console.log(this.steps); // Check the updated steps with joined 'nom' values
       },
       (error) => {
         this.toastr.error('Failed to load steps', 'Error');
       }
     );
-
     // Set columns based on status
     this.updateDisplayedColumns();
   }
+
+
 
   onStatusChange() {
     this.loadSteps(); // Reload the steps when status changes
@@ -64,7 +72,7 @@ export class ListStepsComponent implements OnInit {
   updateDisplayedColumns() {
     if (this.selectedStatus === 'Existant') {
       this.displayedColumns = [
-        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite','actions'
+        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite','date_mise_en_service','actions',
       ];
     } else if (this.selectedStatus === 'En cours') {
       this.displayedColumns = [
