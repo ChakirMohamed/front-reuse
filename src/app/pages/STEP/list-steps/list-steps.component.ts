@@ -90,7 +90,28 @@ export class ListStepsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.loadSteps();
     });
   }
+
+  deleteStep(step: any) {
+
+      // Proceed with the deletion if confirmed
+      this.stepService.deleteStep(step.id).subscribe(
+        (response) => {
+          console.log('Step supprimer avec success!', response);
+          this.toastr.success('STEP supprimer avec success!', 'success');
+          this.loadSteps();
+
+        },
+        (error) => {
+          this.toastr.error('Error while deleting step:', "error");
+          // Handle error if needed
+        }
+      );
+
+  }
+
+
+
 }

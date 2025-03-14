@@ -1,7 +1,7 @@
 <div class="list-steps-container">
   <mat-card>
 
-    
+
     <mat-card-header>
       <div class="filters">
         <!-- Status Filter -->
@@ -95,7 +95,11 @@
         <ng-container matColumnDef="etat_avancement">
           <mat-header-cell *matHeaderCellDef> État d'avancement </mat-header-cell>
           <ng-container *ngIf="selectedStatus === 'En cours'">
-            <mat-cell *matCellDef="let step"> {{ step.encours[0].etat_avancement }} </mat-cell>
+            <mat-cell *matCellDef="let step">
+              <ul>
+                <li *ngFor="let etat of step.encours[0].etat_avancement">{{ etat.annee }}: {{ etat.pourcentage }}%</li>
+              </ul>
+            </mat-cell>
           </ng-container>
         </ng-container>
 

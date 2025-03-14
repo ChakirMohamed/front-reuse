@@ -172,11 +172,10 @@
             name="capacite"
             class="form-control"
             placeholder="Capacité (en m³)"
+            min="0"
             required
           />
         </div>
-
-
 
         <!-- Reuse -->
         <div class="form-group">
@@ -218,6 +217,7 @@
               name="volume_reutiliser"
               class="form-control"
               placeholder="Entrez le volume réutilisé"
+              min="0"
               required
             />
           </div>
@@ -232,13 +232,15 @@
           <h4 class="card-title">Les Travaux En Cours</h4>
 
             <div class="form-group">
-              <label for="coutStep">Coût du STEP (DH)</label>
+              <label for="coutStep">Coût du STEP (MDH)</label>
               <input
                 type="number"
                 class="form-control"
                 id="coutStep"
+                min="0"
                 [(ngModel)]="encours.cout_step"
-                placeholder="Entrez le coût"
+                placeholder="Entrez le coût en MDH"
+
               />
             </div>
             <div class="form-group">
@@ -270,6 +272,7 @@
               class="form-control"
               id="pourcentage-{{ i }}"
               [(ngModel)]="avancement.pourcentage"
+              min="0"
               placeholder="Saisir le pourcentage"
             />
             <button type="button" class="btn btn-danger mt-2" (click)="removeEtatAvancement(i)">

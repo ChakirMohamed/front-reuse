@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { StepService } from '../../../../services/step.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-step-show-modal',
   templateUrl: './step-show-modal.component.html',
@@ -13,7 +14,9 @@ export class StepShowModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<StepShowModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private stepservice:StepService,
+    private toastr: ToastrService
   ) {
     this.selectedStep = data.step;  // Receive step data
     //this.communesString = this.formatCommunes(this.selectedStep.communes); // Format communes here
@@ -59,7 +62,18 @@ export class StepShowModalComponent {
 
   // Delete button handler (add your logic here)
   onDelete(): void {
-    console.log('Delete clicked');
-    // Add your delete logic here
+    // Proceed with the deletion if confirmed
+    this.stepservice.deleteStep(this.selectedStep.id).subscribe(
+      (response) => {
+        console.log('Step supprimer avec success!', response);
+        this.toastr.success('STEP supprimer avec success!', 'success');
+        this.onNoClick();
+
+      },
+      (error) => {
+        this.toastr.error('Error while deleting step:', "error");
+        // Handle error if needed
+      }
+    );
   }
 }

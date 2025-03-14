@@ -55,8 +55,18 @@ export class StepService {
    * @param id The ID of the STEP to delete
    */
   deleteStep(id: number): Observable<any> {
-    return this.apiService.delete(`${this.basePath}/${id}`);
+    const confirmDelete = confirm('voulez vous vraiment supprimer step ?');
+
+    if (confirmDelete) {
+      // Proceed with the deletion if confirmed
+      return this.apiService.delete(`${this.basePath}/${id}`);
+
+    } else {
+      console.log('Deletion canceled');
+    }
   }
+
+
 
   /**
    * Get all usages (for usage dropdown)

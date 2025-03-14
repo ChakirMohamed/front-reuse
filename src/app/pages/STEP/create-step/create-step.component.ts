@@ -142,6 +142,10 @@ export class CreateStepComponent implements OnInit {
   onSubmit() {
 
     if (this.step.statut === 'En cours') {
+      if(this.encours.cout_step && this.encours.cout_step<0){
+        this.toastr.error('Cout de la STEP invalid', 'Error');
+        return;
+      }
       this.encours.etat_avancement = this.etatAvancement;
       this.step.encours = [this.encours]; // Ajoute l'en cours s'il est défini
     }
@@ -172,8 +176,6 @@ export class CreateStepComponent implements OnInit {
         this.toastr.error('Failed to create step.', 'Error');
       }
     );
-    // this.stepService.createStep(this.step).subscribe((response) => {
-    //   console.log('STEP créé avec succès !', response);
-    // });
+
   }
 }
