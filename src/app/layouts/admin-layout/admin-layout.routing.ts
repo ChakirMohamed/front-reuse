@@ -13,6 +13,7 @@ import { CreateCourrierComponent } from 'app/pages/courriers/create-courrier/cre
 import { CreateStepComponent } from 'app/pages/STEP/create-step/create-step.component';
 import { AllCollectivitesComponent } from 'app/pages/Collectivites/all-collectivites/all-collectivites.component'
 import { ListStepsComponent } from 'app/pages/STEP/list-steps/list-steps.component'
+import { EditStepComponent } from 'app/pages/STEP/edit-step/edit-step.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -28,4 +29,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'ajouter-step',        component: CreateStepComponent },
     { path: 'collectivites',        component: AllCollectivitesComponent },
     { path: 'list-steps',        component: ListStepsComponent },
+    { path: 'edit-step/:id', component: EditStepComponent },
 ];

@@ -1,15 +1,124 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { StepService } from '../../../services/step.service';
+import { RegionService } from '../../../services/collectivites/region.service';
+import { ProvinceService } from '../../../services/collectivites/province.service';
+import { CommuneService } from '../../../services/collectivites/commune.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-step',
   templateUrl: './edit-step.component.html',
-  styleUrls: ['./edit-step.component.scss']
+  styleUrls: ['./edit-step.component.scss'],
 })
 export class EditStepComponent implements OnInit {
+  step: any = {};
+  regions: any[] = [];
+  provinces: any[] = [];
+  communes: any[] = [];
+  usages: any[] = [];
+  years: number[] = [];
 
-  constructor() { }
+  encours: any ;
+  etatAvancement: any[] = [];
 
-  ngOnInit(): void {
+  selectedRegion: number | null = null;
+  selectedProvince: number | null = null;
+  selectedCommune: number | null = null;
+
+  @Input() stepId: any;
+
+  constructor(
+    private stepService: StepService,
+    private regionService: RegionService,
+    private provinceService: ProvinceService,
+    private communeService: CommuneService,
+    private toastr: ToastrService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      this.stepId = params.get('id')!;
+      this.fetchStepData();
+    });
+
+    this.regionService.getAllRegions().subscribe((data) => (this.regions = data));
+    this.stepService.getUsages().subscribe((data) => (this.usages = data));
+
+    this.generateYears();
   }
 
+  removeEtatAvancement(index: number) {
+    this.etatAvancement.splice(index, 1);
+  }
+  removeCommune(commune) {
+    this.step.communes = this.step.communes.filter((c) => c !== commune);
+  }
+  fetchStepData() {
+    this.stepService.getStepById(this.stepId).subscribe(
+      (data) => {
+        this.step = data;
+        this.selectedRegion = this.step.region.id;
+        this.selectedProvince = this.step.province.id;
+
+        this.encours = this.step.encours && this.step.encours.length > 0 ? this.step.encours[0] : null;
+        this.etatAvancement = this.encours ? this.encours.etat_avancement : [];
+
+        this.onRegionChange();
+        this.onProvinceChange();
+      },
+      (error) => {
+        this.toastr.error('Failed to fetch STEP data', 'Error');
+      }
+    );
+  }
+  generateYears(): void {
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= 1965; year--) {
+      this.years.push(year);
+    }
+  }
+  addCommune() {
+    if (this.selectedCommune) {
+      const commune = this.communes.find((c) => c.id === this.selectedCommune);
+      this.step.communes.push(commune);
+      //this.onRegionChange();
+    }
+  }
+
+  onReutilisationChange() {
+    if (this.step.reutilise == 0) {
+      this.step.usage_id = null;
+      this.step.volume_reutiliser = null;
+    }
+  }
+
+  onRegionChange() {
+    this.provinceService
+      .getProvincesByRegionId(this.selectedRegion)
+      .subscribe((data) => (this.provinces = data));
+    this.communes = [];
+  }
+
+  onProvinceChange() {
+    this.communeService
+      .getCommunesByProvinceId(this.selectedProvince)
+      .subscribe((data) => (this.communes = data));
+  }
+
+  onSubmit() {
+    if (this.step.statut === 'Existant' && !this.step.date_mise_en_service) {
+      this.toastr.error('Please select a valid year for Date de mise en service');
+      return;
+    }
+    this.stepService.updateStep(this.stepId,this.step).subscribe(
+      (response) => {
+        this.toastr.success('STEP updated successfully!', 'Success');
+      },
+      (error) => {
+        this.toastr.error('Failed to update STEP.', 'Error');
+      }
+    );
+  }
 }

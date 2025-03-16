@@ -4,6 +4,7 @@ import { RegionService } from '../../../services/collectivites/region.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { StepShowModalComponent } from '../step-show-modal/step-show-modal/step-show-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-steps',
@@ -19,7 +20,7 @@ export class ListStepsComponent implements OnInit {
   steps: any[] = []; // Holds filtered steps
   displayedColumns: string[] = []; // Holds column names to display
   communesjoin: any = "";
-  constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService, public dialog: MatDialog ) {}
+  constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService, public dialog: MatDialog , private router:Router) {}
 
   ngOnInit(): void {
     this.loadRegions();
@@ -92,6 +93,9 @@ export class ListStepsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.loadSteps();
     });
+  }
+  updateStep(step: any){
+    this.router.navigate(['/edit-step', step.id]);
   }
 
   deleteStep(step: any) {

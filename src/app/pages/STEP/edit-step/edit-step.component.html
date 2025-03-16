@@ -1,1 +1,254 @@
-<p>edit-step works!</p>
+<div class="edit-step-container">
+  <form (ngSubmit)="onSubmit()" #stepForm="ngForm">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Edit STEP</h4>
+      </div>
+      <div class="card-body">
+        <!-- STEP Information -->
+        <div class="form-group row">
+          <!-- Statut Selection -->
+          <div class="form-group" [ngClass]="step.statut === 'Existant' ? 'col-md-8' : 'col-md-12'">
+            <label for="statut">Statut</label>
+            <select
+              id="statut"
+              [(ngModel)]="step.statut"
+              name="statut"
+              class="form-select"
+              required
+            >
+              <option value="Existant">Existant</option>
+              <option value="En cours">En cours</option>
+            </select>
+          </div>
+
+          <!-- Conditionally show "Date de mise en service" if statut is "Existant" -->
+          <div *ngIf="step.statut === 'Existant'" class="form-group col-md-4">
+            <label for="date_mise_en_service">Année de mise en service</label>
+            <select
+              id="date_mise_en_service"
+              [(ngModel)]="step.date_mise_en_service"
+              name="date_mise_en_service"
+              class="form-select"
+            >
+              <option value="" selected>Sélectionnez une année</option>
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Region, Province, and Commune Fields -->
+        <div class="form-group">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="region">Région :</label>
+              <select
+                name="region"
+                [(ngModel)]="selectedRegion"
+                (change)="onRegionChange()"
+                class="form-select"
+                [disabled]="step.communes.length > 0"
+              >
+                <option *ngFor="let region of regions" [value]="region.id">{{ region.nom }}</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="province">Province :</label>
+              <select
+                name="province"
+                [(ngModel)]="selectedProvince"
+                (change)="onProvinceChange()"
+                class="form-select"
+                [disabled]="step.communes.length > 0"
+              >
+                <option *ngFor="let province of provinces" [value]="province.id">{{ province.nom }}</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="commune">Commune :</label>
+              <select
+                name="commune"
+                [(ngModel)]="selectedCommune"
+                class="form-select"
+                (change)="addCommune()"
+              >
+                <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nom }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="selected-communes">
+            <span *ngFor="let commune of step.communes" class="badge badge-primary">
+              {{ commune.nom }}
+              <button type="button" class="btn-close" (click)="removeCommune(commune)"></button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Other Fields for Milieu, Operateur, Procédé, and Capacité -->
+        <div class="form-group">
+          <label for="milieu">Milieu</label>
+          <select id="milieu" [(ngModel)]="step.milieu" name="milieu" class="form-select" required>
+            <option value="Urbain">Urbain</option>
+            <option value="Rural">Rural</option>
+            <option value="Urbain et Rural">Urbain et Rural</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="operateur">Opérateur</label>
+          <input
+            id="operateur"
+            type="text"
+            [(ngModel)]="step.operateur"
+            name="operateur"
+            class="form-control"
+            placeholder="Nom de l'opérateur"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="procede">Procédé</label>
+          <input
+            id="procede"
+            type="text"
+            [(ngModel)]="step.procede"
+            name="procede"
+            class="form-control"
+            placeholder="Procédé utilisé"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="capacite">Capacité</label>
+          <input
+            id="capacite"
+            type="number"
+            [(ngModel)]="step.capacite"
+            name="capacite"
+            class="form-control"
+            placeholder="Capacité (en m³)"
+            min="0"
+            required
+          />
+        </div>
+
+        <!-- Reuse Fields -->
+        <div class="form-group">
+          <label for="reutilise">Réutilisation</label>
+          <select
+            id="reutilise"
+            [(ngModel)]="step.reutilise"
+            name="reutilise"
+            class="form-select"
+            (change)="onReutilisationChange()"
+            required
+          >
+            <option [value]="1">Oui</option>
+            <option [value]="0">Non</option>
+          </select>
+        </div>
+        <div *ngIf="step.reutilise == 1">
+          <div class="form-group">
+            <label for="usage">Usage</label>
+            <select
+              id="usage"
+              [(ngModel)]="step.usage_id"
+              name="usage"
+              class="form-select"
+              required
+            >
+              <option *ngFor="let usage of usages" [value]="usage.id">
+                {{ usage.nom }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="volume_reutiliser">Volume Réutilisé (m³)</label>
+            <input
+              id="volume_reutiliser"
+              type="number"
+              [(ngModel)]="step.volume_reutiliser"
+              name="volume_reutiliser"
+              class="form-control"
+              placeholder="Entrez le volume réutilisé"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Additional Fields for "En cours" -->
+        <div *ngIf="step.statut === 'En cours'" class="mt-4">
+          <h4 class="card-title">Les Travaux En Cours</h4>
+
+
+          <div class="form-group">
+            <label for="coutStep">Coût du STEP (MDH)</label>
+            <input
+              type="number"
+              [(ngModel)]="encours.cout_step"
+              class="form-control"
+              id="coutStep"
+              min="0"
+              name="coutStep"
+              placeholder="Entrez le coût en MDH"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="situationTravaux">Situation des travaux</label>
+            <textarea
+              class="form-control"
+              id="situationTravaux"
+              rows="3"
+              [(ngModel)]="encours.situation_travaux"
+              name="situationTravaux"
+              placeholder="Décrivez la situation des travaux"
+            ></textarea>
+          </div>
+
+          <h4 class="card-title">État d'Avancement</h4>
+
+          <div class="form-group border p-3" *ngFor="let avancement of etatAvancement; let i = index">
+            <label for="annee-{{ i }}">Année</label>
+            <input
+              type="number"
+              class="form-control"
+              name="annee-{{ i }}"
+              [(ngModel)]="avancement.annee"
+              placeholder="Entrez l'année"
+            />
+            <label for="pourcentage-{{ i }}">Pourcentage</label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="pourcentage-{{ i }}"
+              [(ngModel)]="avancement.pourcentage"
+              min="0"
+              placeholder="Saisir le pourcentage"
+            />
+            <button type="button" class="btn btn-danger mt-2" (click)="removeEtatAvancement(i)">
+              Supprimer
+            </button>
+          </div>
+
+          <button type="button" class="btn btn-link mt-3" (click)="addEtatAvancement()">
+            <i class="nc-icon nc-simple-add"></i> Ajouter Année
+          </button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
+      </div>
+    </div>
+  </form>
+</div>
+

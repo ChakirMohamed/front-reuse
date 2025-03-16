@@ -15,7 +15,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { HttpClientModule } from "@angular/common/http";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditStepComponent } from './pages/STEP/edit-step/edit-step.component';
+
 
 
 
@@ -29,7 +29,7 @@ import { EditStepComponent } from './pages/STEP/edit-step/edit-step.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    EditStepComponent,
+    
 
 
 

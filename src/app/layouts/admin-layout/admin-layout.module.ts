@@ -29,7 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AddEntityDialogComponent } from '../../pages/Collectivites/add-entity-dialog/add-entity-dialog.component';
 import { AllCollectivitesComponent } from '../../pages/Collectivites/all-collectivites/all-collectivites.component';
 import { StepShowModalComponent } from '../../pages/STEP/step-show-modal/step-show-modal/step-show-modal.component';
-
+import { EditStepComponent } from '../../pages/STEP/edit-step/edit-step.component';
 // Import Angular Material Modules
 
 import { MatSelectModule } from '@angular/material/select';
@@ -74,6 +74,7 @@ import {MatDividerModule} from '@angular/material/divider';
     AllCollectivitesComponent,
     ListStepsComponent,
     StepShowModalComponent,
+    EditStepComponent,
   ]
 })
 
