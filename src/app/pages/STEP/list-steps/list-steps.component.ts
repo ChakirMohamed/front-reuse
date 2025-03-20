@@ -7,20 +7,25 @@ import { StepShowModalComponent } from '../step-show-modal/step-show-modal/step-
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list-steps',
-  templateUrl: './list-steps.component.html',
-  styleUrls: ['./list-steps.component.scss'],
+  selector: "app-list-steps",
+  templateUrl: "./list-steps.component.html",
+  styleUrls: ["./list-steps.component.scss"],
 })
-
 export class ListStepsComponent implements OnInit {
-  selectedStatus: string = 'Existant';
+  selectedStatus: string = "Existant";
   selectedRegion: number | null = null;
 
   regions: any[] = []; // Holds all regions
   steps: any[] = []; // Holds filtered steps
   displayedColumns: string[] = []; // Holds column names to display
   communesjoin: any = "";
-  constructor(private stepService: StepService, private regionService: RegionService, private toastr: ToastrService, public dialog: MatDialog , private router:Router) {}
+  constructor(
+    private stepService: StepService,
+    private regionService: RegionService,
+    private toastr: ToastrService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadRegions();
@@ -33,33 +38,35 @@ export class ListStepsComponent implements OnInit {
         this.regions = data;
       },
       (error) => {
-        this.toastr.error('Failed to load regions', 'Error');
+        this.toastr.error("Failed to load regions", "Error");
       }
     );
   }
 
   loadSteps() {
     const regionId = this.selectedRegion ? this.selectedRegion : null;
-    this.stepService.getStepsByStatusAndRegion(this.selectedStatus, regionId).subscribe(
-      (data) => {
-        this.steps = data.map(step => {
-          // Check if communes is an array of objects and join the 'nom' property
-          if (Array.isArray(step.communes)) {
-            step.communes = step.communes.map(commune => commune.nom).join(', '); // Join 'nom' property
-          }
-          return step;
-        });
-        console.log(this.steps); // Check the updated steps with joined 'nom' values
-      },
-      (error) => {
-        this.toastr.error('Failed to load steps', 'Error');
-      }
-    );
+    this.stepService
+      .getStepsByStatusAndRegion(this.selectedStatus, regionId)
+      .subscribe(
+        (data) => {
+          this.steps = data.map((step) => {
+            // Check if communes is an array of objects and join the 'nom' property
+            if (Array.isArray(step.communes)) {
+              step.communes = step.communes
+                .map((commune) => commune.nom)
+                .join(", "); // Join 'nom' property
+            }
+            return step;
+          });
+          console.log(this.steps); // Check the updated steps with joined 'nom' values
+        },
+        (error) => {
+          this.toastr.error("Failed to load steps", "Error");
+        }
+      );
     // Set columns based on status
     this.updateDisplayedColumns();
   }
-
-
 
   onStatusChange() {
     this.loadSteps(); // Reload the steps when status changes
@@ -71,14 +78,31 @@ export class ListStepsComponent implements OnInit {
 
   // Dynamically set the displayed columns based on the selected status
   updateDisplayedColumns() {
-    if (this.selectedStatus === 'Existant') {
+    if (this.selectedStatus === "Existant") {
       this.displayedColumns = [
-        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite','date_mise_en_service','actions',
+        "region",
+        "province",
+        "communes",
+        "milieu",
+        "operateur",
+        "procede",
+        "capacite",
+        "date_mise_en_service",
+        "actions",
       ];
-    } else if (this.selectedStatus === 'En cours') {
+    } else if (this.selectedStatus === "En cours") {
       this.displayedColumns = [
-        'region', 'province', 'communes', 'milieu', 'operateur', 'procede', 'capacite',
-        'cout', 'situation_travaux', 'etat_avancement','actions'
+        "region",
+        "province",
+        "communes",
+        "milieu",
+        "operateur",
+        "procede",
+        "capacite",
+        "cout",
+        "situation_travaux",
+        "etat_avancement",
+        "actions",
       ];
     }
   }
@@ -86,36 +110,30 @@ export class ListStepsComponent implements OnInit {
   //show modal
   openShowModal(step: any): void {
     const dialogRef = this.dialog.open(StepShowModalComponent, {
-      width: '80%', // Modal width
-      data: { step }
+      width: "80%", // Modal width
+      data: { step },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.loadSteps();
     });
   }
-  updateStep(step: any){
-    this.router.navigate(['/edit-step', step.id]);
+  updateStep(step: any) {
+    this.router.navigate(["/edit-step", step.id]);
   }
 
   deleteStep(step: any) {
-
-      // Proceed with the deletion if confirmed
-      this.stepService.deleteStep(step.id).subscribe(
-        (response) => {
-          console.log('Step supprimer avec success!', response);
-          this.toastr.success('STEP supprimer avec success!', 'success');
-          this.loadSteps();
-
-        },
-        (error) => {
-          this.toastr.error('Error while deleting step:', "error");
-          // Handle error if needed
-        }
-      );
-
+    // Proceed with the deletion if confirmed
+    this.stepService.deleteStep(step.id).subscribe(
+      (response) => {
+        console.log("Step supprimer avec success!", response);
+        this.toastr.success("STEP supprimer avec success!", "success");
+        this.loadSteps();
+      },
+      (error) => {
+        this.toastr.error("Error while deleting step:", "error");
+        // Handle error if needed
+      }
+    );
   }
-
-
-
 }

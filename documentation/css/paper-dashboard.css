@@ -2510,7 +2510,7 @@ select.selectpicker {
     .bootstrap-select.btn-group .dropdown-menu li.disabled a {
       cursor: not-allowed; }
     .bootstrap-select.btn-group .dropdown-menu li a {
-      color: #66615b;
+      color: #1d1d1d;
       font-size: 16px;
       padding: 5px 45px 5px 15px;
       clear: both;
@@ -3558,7 +3558,7 @@ NOTE: use percentage font sizes or else old IE chokes
       border-color: #403D39;
       box-shadow: none; }
   .fc button.btn-link {
-    color: #66615B; }
+    color: #2c2c2c; }
     .fc button.btn-link:hover, .fc button.btn-link:focus, .fc button.btn-link:active, .fc button.btn-link:active:focus {
       background-color: transparent;
       color: #403D39;

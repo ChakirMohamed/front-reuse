@@ -62,7 +62,7 @@ export class EditStepComponent implements OnInit {
         this.selectedRegion = this.step.region.id;
         this.selectedProvince = this.step.province.id;
 
-        this.encours = this.step.encours && this.step.encours.length > 0 ? this.step.encours[0] : null;
+        this.encours = this.step.encours && this.step.encours.length > 0 ? this.step.encours[0] : {cout_step: null,situation_travaux: '',etat_avancement: []};
         this.etatAvancement = this.encours ? this.encours.etat_avancement : [];
 
         this.onRegionChange();
@@ -102,19 +102,41 @@ export class EditStepComponent implements OnInit {
   }
 
   onProvinceChange() {
+    this.communes = [];
     this.communeService
       .getCommunesByProvinceId(this.selectedProvince)
       .subscribe((data) => (this.communes = data));
   }
 
   onSubmit() {
-    if (this.step.statut === 'Existant' && !this.step.date_mise_en_service) {
-      this.toastr.error('Please select a valid year for Date de mise en service');
-      return;
+    console.log(this.step);
+
+    if (this.step.statut === 'En cours') {
+      if(!this.encours.cout_step || this.encours.cout_step<0){
+        this.toastr.error('Cout de la STEP invalid', 'Error');
+        return;
+      }
+      this.encours.etat_avancement = this.etatAvancement;
+      this.step.encours = [this.encours]; // Ajoute l'en cours s'il est défini
     }
+
+    if(this.step.communes.length<=0){this.toastr.error('Choisir les Communes de la STEP !', '');return}
+    this.step.communesId = this.step.communes.map(commune => commune.id);
+    if(this.step.operateur.trim()==""){this.toastr.error('Saisir operateur !', '');return}
+    if(this.step.date_mise_en_service == "" ){this.step.date_mise_en_service=null;}
+
+    // Ensure data integrity before sending to API
+    if (this.step.reutilise == 0) {
+      this.step.usage_id=null;
+      this.step.volume_reutiliser=null;
+    }
+
+
+
+
     this.stepService.updateStep(this.stepId,this.step).subscribe(
       (response) => {
-        this.toastr.success('STEP updated successfully!', 'Success');
+        this.toastr.success('STEP modifier avec success!', 'Success');
       },
       (error) => {
         this.toastr.error('Failed to update STEP.', 'Error');

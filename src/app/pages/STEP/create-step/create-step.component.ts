@@ -142,7 +142,7 @@ export class CreateStepComponent implements OnInit {
   onSubmit() {
 
     if (this.step.statut === 'En cours') {
-      if(this.encours.cout_step && this.encours.cout_step<0){
+      if(!this.encours.cout_step || this.encours.cout_step<0){
         this.toastr.error('Cout de la STEP invalid', 'Error');
         return;
       }
@@ -161,7 +161,7 @@ export class CreateStepComponent implements OnInit {
     this.step.communesId = this.step.communes.map(commune => commune.id);
     if(this.step.operateur.trim()==""){this.toastr.error('Saisir operateur !', '');return}
     if(this.step.date_mise_en_service == "" ){this.step.date_mise_en_service=null;}
-    console.log(this.step)
+    //console.log(this.step)
 
     this.stepService.createStep(this.step).subscribe(
       (response) => {

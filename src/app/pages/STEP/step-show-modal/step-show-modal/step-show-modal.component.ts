@@ -2,6 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StepService } from '../../../../services/step.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-step-show-modal',
   templateUrl: './step-show-modal.component.html',
@@ -16,7 +19,8 @@ export class StepShowModalComponent {
     public dialogRef: MatDialogRef<StepShowModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private stepservice:StepService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.selectedStep = data.step;  // Receive step data
     //this.communesString = this.formatCommunes(this.selectedStep.communes); // Format communes here
@@ -56,8 +60,10 @@ export class StepShowModalComponent {
 
   // Edit button handler (add your logic here)
   onEdit(): void {
-    console.log('Edit clicked');
+
     // Add your edit logic here
+    this.router.navigate(["/edit-step", this.selectedStep.id]);
+    this.dialogRef.close();
   }
 
   // Delete button handler (add your logic here)
