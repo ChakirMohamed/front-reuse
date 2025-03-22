@@ -7,30 +7,34 @@
       <button mat-icon-button matTreeNodeToggle *ngIf="node.expandable">
         <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
       </button>
-      <span>{{ node.nom }}</span>
+      <button mat-icon-button matTreeNodeToggle *ngIf="!node.expandable && (node.type === 'province' || node.type === 'region')">
+        <mat-icon>hourglass_empty</mat-icon>
+      </button>
+      <span>{{ node.nom }} <small><sup>{{node.type === 'commune'? node.id : ''}}</sup> </small></span>
     </div>
 
     <!-- Add Button for Adding New Nodes -->
-    <div class="add-button" *ngIf="treeControl.isExpanded(node)">
+    <div class="add-button"  *ngIf="treeControl.isExpanded(node) || (node.type === 'province' && !node.expandable)">
       <button
         mat-button
         color="primary"
         *ngIf="node.type === 'region'"
         (click)="openAddDialog('province', node.id)"
       >
-        + Add Province
+        + Ajouter Province
       </button>
+
       <button
         mat-button
         color="primary"
         *ngIf="node.type === 'province'"
         (click)="openAddDialog('commune', node.id)"
       >
-        + Add Commune
+        + Ajouter Commune
       </button>
     </div>
   </mat-tree-node>
-</mat-tree> 
+</mat-tree>
 
   </div>
 </div>

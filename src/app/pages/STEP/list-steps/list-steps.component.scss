@@ -65,7 +65,7 @@
     width: 100%;
     margin-top: 20px;
     display: block; /* Ensure the table is a block element */
-    max-height: 400px; /* Set a maximum height for scroll */
+    max-height: 90vh; /* Set a maximum height for scroll */
     overflow: auto; /* Allow the content to scroll */
     overflow-y: scroll;
   }

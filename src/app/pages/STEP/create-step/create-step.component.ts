@@ -4,6 +4,8 @@ import {  CommuneService } from '../../../services/collectivites/commune.service
 import { RegionService } from '../../../services/collectivites/region.service';
 import { ProvinceService,} from '../../../services/collectivites/province.service';
 import { ToastrService } from 'ngx-toastr';
+import { AddEntityDialogComponent } from 'app/pages/Collectivites/add-entity-dialog/add-entity-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-create-step',
   templateUrl: './create-step.component.html',
@@ -46,7 +48,8 @@ export class CreateStepComponent implements OnInit {
     private regionService: RegionService,
     private provinceService: ProvinceService,
     private communeService: CommuneService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -137,6 +140,20 @@ export class CreateStepComponent implements OnInit {
     // Reset the form control states
     //stepForm.reset();
   }
+
+  openAddDialog(type: 'region' | 'province' | 'commune', parentId: number | null = null): void {
+      const dialogRef = this.dialog.open(AddEntityDialogComponent, {
+        width: '400px',
+        data: { type, parentId },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.onRegionChange(); // Refresh data after adding
+        }
+      });
+  }
+
 
 
   onSubmit() {
