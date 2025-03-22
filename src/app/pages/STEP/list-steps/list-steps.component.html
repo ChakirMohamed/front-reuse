@@ -3,6 +3,7 @@
 
 
     <mat-card-header>
+
       <div class="filters">
         <!-- Status Filter -->
         <mat-form-field appearance="fill">
@@ -23,7 +24,12 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <button  style="background-color: transparent; border: none;width: 64px;" (click)="downloadXLSX()">
+          <img src="assets/img/icons/excel.png" alt="Excel download" class="excel-icon" />
+        </button>
       </div>
+      <!-- In the mat-card-header -->
+
     </mat-card-header>
 
 

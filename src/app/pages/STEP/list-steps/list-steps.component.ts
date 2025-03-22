@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { StepShowModalComponent } from '../step-show-modal/step-show-modal/step-show-modal.component';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: "app-list-steps",
@@ -136,4 +137,85 @@ export class ListStepsComponent implements OnInit {
       }
     );
   }
+
+
+
+
+
+
+  downloadXLSX() {
+    // Define headers based on the selected status
+    let headers: string[] = [];
+
+    if (this.selectedStatus === 'Existant') {
+      headers = [
+        'Région', 'Province', 'Communes', 'Milieu', 'Operateur', 'Procédé', 'Capacité', 'Date Mise En Service'
+      ];
+    } else if (this.selectedStatus === 'En cours') {
+      headers = [
+        'Région', 'Province', 'Communes', 'Milieu', 'Operateur', 'Procédé', 'Capacité', 'Date Mise En Service',
+        'Coût STEP', 'Situation des Travaux', 'État d\'Avancement'
+      ];
+    }
+
+    // Prepare the data for each row, dynamically changing depending on the selected status
+    const data = this.steps.map((step) => {
+
+      const etatAvancement = step.encours?.[0]?.etat_avancement.map(avancement => `${avancement.annee}: ${avancement.pourcentage}%`).join(', ') || '';
+
+      // Generate the row data
+      const rowData = [
+        step.region_nom,
+        step.province_nom,
+        step.communes,
+        step.milieu,
+        step.operateur,
+        step.procede,
+        step.capacite,
+        step.date_mise_en_service || '-',
+      ];
+
+      if (this.selectedStatus === 'En cours') {
+        rowData.push(
+          step.encours?.[0]?.cout_step || '-',
+          step.encours?.[0]?.situation_travaux || '-',
+          etatAvancement
+        );
+      }
+
+      return rowData;
+    });
+
+    // Create the worksheet with the data and headers
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([headers, ...data]);
+
+    // Add cell borders
+    const range = XLSX.utils.decode_range(ws['!ref']); // Get the range of the sheet
+    for (let row = range.s.r; row <= range.e.r; row++) {
+      for (let col = range.s.c; col <= range.e.c; col++) {
+        const address = { r: row, c: col };
+        const cell_ref = XLSX.utils.encode_cell(address);
+
+        // Apply borders to each cell
+        if (!ws[cell_ref]) ws[cell_ref] = {}; // Make sure the cell exists
+        ws[cell_ref].s = {
+          border: {
+            top: { style: 'thin', color: { rgb: '000000' } },
+            left: { style: 'thin', color: { rgb: '000000' } },
+            bottom: { style: 'thin', color: { rgb: '000000' } },
+            right: { style: 'thin', color: { rgb: '000000' } },
+          }
+        };
+      }
+    }
+
+    // Create the workbook and append the sheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'STEPs '+this.selectedStatus);
+
+    // Write the Excel file to the browser
+    XLSX.writeFile(wb, 'steps_data.xlsx');
+  }
+
+
 }
