@@ -69,9 +69,12 @@
               [(ngModel)]="selectedRegion"
               (change)="onRegionChange()"
               class="form-select"
-              [disabled]="step.communes.length > 0"
+              [disabled]="step.communes.length > 0 "
             >
             <!-- <option value="-1">Selectionné la Région</option> -->
+            <option  value="null">
+              Sélectionnez la Région
+            </option>
               <option *ngFor="let region of regions" [value]="region.id">
                 {{ region.nom }}
               </option>
@@ -99,7 +102,7 @@
               [(ngModel)]="selectedProvince"
               (change)="onProvinceChange()"
               class="form-select"
-              [disabled]="step.communes.length > 0"
+              [disabled]="step.communes.length > 0 || !selectedRegion"
             >
               <option  value="null">
                 Sélectionnez la Province
@@ -129,7 +132,7 @@
               name="commune"
               [(ngModel)]="selectedCommune"
               class="form-select"
-
+              [disabled]="!selectedProvince"
               (change)="addCommune()"
             >
               <option  value="null">

@@ -38,51 +38,106 @@
         </div>
 
         <!-- Region, Province, and Commune Fields -->
+        <!-- Communes Selection -->
         <div class="form-group">
+
           <div class="row">
-            <div class="form-group col-md-4">
-              <label for="region">Région :</label>
-              <select
-                name="region"
-                [(ngModel)]="selectedRegion"
-                (change)="onRegionChange()"
-                class="form-select"
-                [disabled]="step.communes.length > 0"
+
+            <div class="form-group col-md-4"><label for="region">Région :</label>
+            <select
+              name="region"
+              [(ngModel)]="selectedRegion"
+              (change)="onRegionChange()"
+              class="form-select"
+              [disabled]="step.communes.length > 0 "
+            >
+            <!-- <option value="-1">Selectionné la Région</option> -->
+            <option  value="null">
+              Sélectionnez la Région
+            </option>
+              <option *ngFor="let region of regions" [value]="region.id">
+                {{ region.nom }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <div class="row align-items-center">
+              <label for="province" class="col-4">Province : </label>
+              <button
+              type="button"
+              style="line-height: normal;"
+              mat-button
+              color="primary"
+              *ngIf="selectedRegion"
+              (click)="openAddDialog('province',selectedRegion)"
+              class="col-8"
               >
-                <option *ngFor="let region of regions" [value]="region.id">{{ region.nom }}</option>
-              </select>
+              + Nouvelle Province
+              </button>
             </div>
 
-            <div class="form-group col-md-4">
-              <label for="province">Province :</label>
-              <select
-                name="province"
-                [(ngModel)]="selectedProvince"
-                (change)="onProvinceChange()"
-                class="form-select"
-                [disabled]="step.communes.length > 0"
-              >
-                <option *ngFor="let province of provinces" [value]="province.id">{{ province.nom }}</option>
-              </select>
-            </div>
+            <select
+            name="province"
+              [(ngModel)]="selectedProvince"
+              (change)="onProvinceChange()"
+              class="form-select"
+              [disabled]="step.communes.length > 0 || !selectedRegion"
+            >
+              <option  value="null">
+                Sélectionnez la Province
+              </option>
+              <option *ngFor="let province of provinces" [value]="province.id">
+                {{ province.nom }}
+              </option>
+            </select>
+
+          </div>
 
             <div class="form-group col-md-4">
               <label for="commune">Commune :</label>
-              <select
-                name="commune"
-                [(ngModel)]="selectedCommune"
-                class="form-select"
-                (change)="addCommune()"
+              <button
+              type="button"
+              style="line-height: normal;"
+              mat-button
+              color="primary"
+              *ngIf="selectedProvince"
+              (click)="openAddDialog('commune',selectedProvince)"
+              class="col-8"
               >
-                <option *ngFor="let commune of communes" [value]="commune.id">{{ commune.nom }}</option>
-              </select>
-            </div>
-          </div>
+              + Nouvelle Commune
+              </button>
 
+            <select
+              name="commune"
+              [(ngModel)]="selectedCommune"
+              class="form-select"
+              [disabled]="!selectedProvince"
+              (change)="addCommune()"
+            >
+              <option  value="null">
+                Sélectionnez la Commune
+              </option>
+              <option *ngFor="let commune of communes" [value]="commune.id">
+                {{ commune.nom }}
+              </option>
+            </select></div>
+
+            <!-- <button type="button" class="btn btn-primary" (click)="addCommune()">
+              Ajouter
+            </button> -->
+          </div>
           <div class="selected-communes">
-            <span *ngFor="let commune of step.communes" class="badge badge-primary">
+            <span
+              *ngFor="let commune of step.communes"
+              class="badge badge-primary"
+            >
               {{ commune.nom }}
-              <button type="button" class="btn-close" (click)="removeCommune(commune)"></button>
+              <button
+                type="button"
+                class="btn-close"
+                (click)="removeCommune(commune)"
+              ></button>
             </span>
           </div>
         </div>

@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 
+#theme doc
+/documentation
+
 # dependencies
 /node_modules
 

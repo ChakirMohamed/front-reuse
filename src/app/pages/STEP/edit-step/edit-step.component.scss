@@ -1,0 +1,13 @@
+.selected-communes {
+  margin-top: 10px;
+  .badge {
+    margin-right: 5px;
+    font-size: small;
+    font-weight: initial;
+  }
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
