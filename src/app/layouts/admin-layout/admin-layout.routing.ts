@@ -14,6 +14,7 @@ import { CreateStepComponent } from 'app/pages/STEP/create-step/create-step.comp
 import { AllCollectivitesComponent } from 'app/pages/Collectivites/all-collectivites/all-collectivites.component'
 import { ListStepsComponent } from 'app/pages/STEP/list-steps/list-steps.component'
 import { EditStepComponent } from 'app/pages/STEP/edit-step/edit-step.component';
+import { ListConventionsComponent } from 'app/pages/conventions/list-conventions/list-conventions.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -30,4 +31,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'collectivites',        component: AllCollectivitesComponent },
     { path: 'list-steps',        component: ListStepsComponent },
     { path: 'edit-step/:id', component: EditStepComponent },
+    //conventions
+    { path: 'conventions', component: ListConventionsComponent },
 ];

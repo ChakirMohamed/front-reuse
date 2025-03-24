@@ -15,7 +15,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { HttpClientModule } from "@angular/common/http";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListConventionsComponent } from './pages/conventions/list-conventions/list-conventions.component';
+
 
 
 
@@ -30,8 +30,8 @@ import { ListConventionsComponent } from './pages/conventions/list-conventions/l
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    ListConventionsComponent,
     
+
 
 
 
