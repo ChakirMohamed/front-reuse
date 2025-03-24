@@ -1,100 +1,158 @@
 <div class="list-conventions-container">
   <mat-card>
     <mat-card-header>
-      <div class="filters">
-        <!-- Region Filter -->
-        <mat-form-field appearance="fill">
-          <mat-label>Region</mat-label>
-          <mat-select [(value)]="selectedRegion" (selectionChange)="onRegionChange()" multiple>
-            <mat-option *ngFor="let region of regions" [value]="region.id">
-              {{ region.nom }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="container-fluid p-0">
+        <div class="row g-2">
+          <!-- Region Filter -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Region</mat-label>
+              <mat-select [(value)]="selectedRegion" (selectionChange)="onRegionChange()" multiple>
+                <mat-option *ngFor="let region of regions" [value]="region.id">
+                  {{ region.nom }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-        <!-- Usage Filter -->
-        <mat-form-field appearance="fill">
-          <mat-label>Usage</mat-label>
-          <mat-select [(value)]="selectedUsage" (selectionChange)="onUsageChange()" multiple>
-            <mat-option *ngFor="let usage of usages" [value]="usage.id">
-              {{ usage.nom }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <!-- Usage Filter -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Usage</mat-label>
+              <mat-select [(value)]="selectedUsage" (selectionChange)="onUsageChange()" multiple>
+                <mat-option *ngFor="let usage of usages" [value]="usage.id">
+                  {{ usage.nom }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-        <!-- Mi-Financement Filter -->
-        <mat-form-field appearance="fill">
-          <mat-label>Mi-Financement</mat-label>
-          <mat-select [(value)]="selectedMiFinancement" (selectionChange)="onMiFinancementChange()" multiple>
-            <mat-option *ngFor="let miFinancement of miFinancements" [value]="miFinancement.id">
-              {{ miFinancement.nom }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <!-- Mi-Financement Filter -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Mi-Financement</mat-label>
+              <mat-select [(value)]="selectedMiFinancement" (selectionChange)="onMiFinancementChange()" multiple>
+                <mat-option *ngFor="let miFinancement of miFinancements" [value]="miFinancement.id">
+                  {{ miFinancement.nom }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-        <!-- Status Filter -->
-        <mat-form-field appearance="fill">
-          <mat-label>Status</mat-label>
-          <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusChange()" multiple>
-            <mat-option *ngFor="let status of statuses" [value]="status.id">
-              {{ status.nom }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <!-- Status Filter -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Status</mat-label>
+              <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusChange()" multiple>
+                <mat-option *ngFor="let status of statuses" [value]="status.id">
+                  {{ status.nom }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-        <!-- Clear Filters Button -->
-        <button mat-button (click)="clearFilters()">Effacer les filtres</button>
+          <!-- Year Filter -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Year</mat-label>
+              <input matInput type="number" [(ngModel)]="selectedYear" (change)="onYearChange()">
+            </mat-form-field>
+          </div>
+
+          <!-- Clear Filters Button -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex align-items-start m-0">
+            <button mat-raised-button color="warn" (click)="clearFilters()"
+                    class="w-100 d-flex justify-content-center align-items-center gap-2">
+              <mat-icon>clear</mat-icon>
+              Effacer les filtres
+            </button>
+          </div>
+        </div>
       </div>
     </mat-card-header>
 
     <mat-card-content>
       <!-- Table for displaying conventions -->
       <mat-table [dataSource]="conventions" class="mat-elevation-z8">
+        <!-- Region Column -->
         <ng-container matColumnDef="region">
           <mat-header-cell *matHeaderCellDef> Région </mat-header-cell>
           <mat-cell *matCellDef="let convention"> {{ convention.region_nom }} </mat-cell>
         </ng-container>
+
+        <!-- Province Column -->
         <ng-container matColumnDef="province">
           <mat-header-cell *matHeaderCellDef> Province </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.region_nom }} </mat-cell>
+          <mat-cell *matCellDef="let convention">
+            {{ convention.provinces_names?.split(',')[0] || '' }}
+          </mat-cell>
         </ng-container>
 
+        <!-- Communes Column -->
         <ng-container matColumnDef="communes">
           <mat-header-cell *matHeaderCellDef> Communes </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.communes.join(', ') }} </mat-cell>
+          <mat-cell *matCellDef="let convention">
+            <div *ngFor="let commune of convention.communes">{{ commune }}</div>
+          </mat-cell>
         </ng-container>
 
+        <!-- Titre Column -->
         <ng-container matColumnDef="titre">
           <mat-header-cell *matHeaderCellDef> Titre </mat-header-cell>
           <mat-cell *matCellDef="let convention"> {{ convention.titre }} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="montant">
-          <mat-header-cell *matHeaderCellDef> Montant </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.montant }} </mat-cell>
+        <!-- Montant Total Column -->
+        <ng-container matColumnDef="montant_total">
+          <mat-header-cell *matHeaderCellDef> Montant Total </mat-header-cell>
+          <mat-cell *matCellDef="let convention">
+            {{ convention.montant_taotal | currency:'MAD':'symbol':'1.2-2' }}
+          </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="date_signature">
-          <mat-header-cell *matHeaderCellDef> Date de Signature </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.date_signature }} </mat-cell>
-        </ng-container>
-
-
-
-
-
+        <!-- MI Financement Column -->
         <ng-container matColumnDef="mi_financement">
-          <mat-header-cell *matHeaderCellDef> Mi-Financement </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.mi_financement }} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> MI Financement <small>MDH</small> </mat-header-cell>
+          <mat-cell *matCellDef="let convention">
+
+            <ul>
+              <li *ngFor="let mi of convention.mi_financements">{{ mi.nom }}: {{ mi.montant}}</li>
+            </ul>
+          </mat-cell>
         </ng-container>
 
+        <!-- Autre Financement Column -->
         <ng-container matColumnDef="autre_financement">
-          <mat-header-cell *matHeaderCellDef> Autre Financement </mat-header-cell>
-          <mat-cell *matCellDef="let convention"> {{ convention.autre_convention_financement }} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> Autre Financement <small>MDH</small> </mat-header-cell>
+          <mat-cell *matCellDef="let convention">
+            <ul>
+              <li *ngFor="let autre of convention.autre_convention_financement" >{{ autre.titre }}: {{ autre.montant }}</li>
+            </ul>
+          </mat-cell>
         </ng-container>
 
+        <!-- Usages Column -->
+        <ng-container matColumnDef="usages">
+          <mat-header-cell *matHeaderCellDef> Usages </mat-header-cell>
+          <mat-cell *matCellDef="let convention">
+            <div *ngFor="let usage of convention.usages" class="usage-item">
+              {{ usage.nom }} ({{ usage.libelle }})
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Date Signature Column -->
+        <ng-container matColumnDef="date_signature">
+          <mat-header-cell *matHeaderCellDef> Date Signature </mat-header-cell>
+          <mat-cell *matCellDef="let convention">
+            <span *ngIf="convention.signe === '1'">{{ convention.date_signature | date:'dd/MM/yyyy' }}</span>
+            <span *ngIf="convention.signe !== '1'">Non signé</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
           <mat-cell *matCellDef="let convention">
             <button mat-icon-button (click)="deleteConvention(convention)">
               <mat-icon>delete</mat-icon>

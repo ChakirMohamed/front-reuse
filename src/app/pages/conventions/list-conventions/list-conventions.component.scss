@@ -1,5 +1,5 @@
 .list-conventions-container {
-  margin: 20px;
+  
 
   .mat-card {
     padding: 15px;
@@ -49,5 +49,12 @@
 
   button {
     margin-top: 10px;
+  }
+  ul{
+    list-style-type: none;
+    padding: 0;
+    li {
+      padding: 0;
+    }
   }
 }

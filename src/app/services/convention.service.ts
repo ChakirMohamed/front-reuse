@@ -15,30 +15,28 @@ export class ConventionService {
 
   // Fetch all conventions with multiple filters
   getFilteredConventions(
-    status: number[], // Array of selected status
-    regionIds: number[], // Array of selected region IDs
-    usageIds: number[], // Array of selected usage IDs
-    miFinancementIds: number[] // Array of selected mi-financement IDs
-  ): Observable<any> {
+status: number[], selectedYear: number, regionIds: number[], usageIds: number[], miFinancementIds: number[]  ): Observable<any> {
     // Initialize HttpParams
     let params = new HttpParams();
 
     // Dynamically append each parameter if they exist
-    if (status.length) {
-      params = params.append('status', status.join(','));
-    }
 
-    if (regionIds.length) {
-      params = params.append('regionIds', regionIds.join(','));
-    }
+    status.forEach(id=>{
+      params = params.append('status[]', id.toString());
+    })
 
-    if (usageIds.length) {
-      params = params.append('usageIds', usageIds.join(','));
-    }
 
-    if (miFinancementIds.length) {
-      params = params.append('miFinancementIds', miFinancementIds.join(','));
-    }
+    regionIds.forEach(id => {
+      params = params.append('regionIds[]', id.toString());
+    });
+
+    usageIds.forEach(id => {
+      params = params.append('usageIds[]', id.toString());
+    });
+
+    miFinancementIds.forEach(id => {
+      params = params.append('miFinancementIds[]', id.toString());
+    });
 
     // Call API to get filtered conventions
     return this.apiService.get<any>('conventions', params);
