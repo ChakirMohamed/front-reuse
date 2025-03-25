@@ -1,9 +1,9 @@
 <div class="create-convention-container">
   <form (ngSubmit)="onSubmit()" #conventionForm="ngForm">
     <div class="card">
-      <div class="card-header">
+      <!-- <div class="card-header">
         <h4 class="card-title">Nouvelle Convention</h4>
-      </div>
+      </div> -->
       <div class="card-body">
         <!-- Basic Information -->
         <div class="form-group">
@@ -19,88 +19,6 @@
           />
         </div>
 
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="date_signature">Date de signature</label>
-            <input
-              id="date_signature"
-              type="date"
-              [(ngModel)]="convention.date_signature"
-              name="date_signature"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="annee">Année</label>
-            <select
-              id="annee"
-              [(ngModel)]="convention.annee"
-              name="annee"
-              class="form-select"
-              required
-            >
-              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="montant">Montant (MDH)</label>
-          <input
-            id="montant"
-            type="number"
-            [(ngModel)]="convention.montant"
-            name="montant"
-            class="form-control"
-            placeholder="Montant en MDH"
-            min="0"
-            step="0.01"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="consistance">Consistance</label>
-          <textarea
-            id="consistance"
-            [(ngModel)]="convention.consistance"
-            name="consistance"
-            class="form-control"
-            rows="3"
-            placeholder="Détails de la convention"
-            required
-          ></textarea>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-md-6">
-            <label for="signe">Signé</label>
-            <select
-              id="signe"
-              [(ngModel)]="convention.signe"
-              name="signe"
-              class="form-select"
-              required
-            >
-              <option [value]="1">Oui</option>
-              <option [value]="0">Non</option>
-            </select>
-          </div>
-
-          <div class="col-md-6">
-            <label for="id_status">Statut</label>
-            <select
-              id="id_status"
-              [(ngModel)]="convention.id_status"
-              name="id_status"
-              class="form-select"
-              required
-            >
-              <option *ngFor="let status of statuses" [value]="status.id">{{ status.nom }}</option>
-            </select>
-          </div>
-        </div>
 
         <!-- Communes Selection -->
         <div class="form-group mt-4">
@@ -162,6 +80,94 @@
           </div>
         </div>
 
+        <!-- statut   Annee -->
+        <div class="row">
+          <div class="col-md-6">
+            <label for="id_status">Statut</label>
+            <select
+              id="id_status"
+              [(ngModel)]="convention.id_status"
+              name="id_status"
+              class="form-select"
+              required
+            >
+            <option value="null" selected>selectionné statut</option>
+              <option *ngFor="let status of statuses" [value]="status.id">{{ status.nom }}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="annee">Au titre de l'année</label>
+            <input
+            id="annee"
+            type="text"
+            [(ngModel)]="convention.annne"
+            name="titre"
+            class="form-control"
+            placeholder="Année de la convention"
+            required
+          />
+
+          </div>
+        </div>
+
+        <!--montant-->
+        <!-- <div class="form-group">
+          <label for="montant">Montant (MDH)</label>
+          <input
+            id="montant"
+            type="number"
+            [(ngModel)]="convention.montant"
+            name="montant"
+            class="form-control"
+            placeholder="Montant en MDH"
+            min="0"
+            step="0.01"
+          />
+        </div> -->
+
+        <div class="form-group">
+          <label for="consistance">Consistance</label>
+          <textarea
+            id="consistance"
+            [(ngModel)]="convention.consistance"
+            name="consistance"
+            class="form-control"
+            rows="3"
+            placeholder="Détails de la convention"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group row">
+          <div  [ngClass]="convention.signe  ? 'col-md-6' : 'col-md-12'">
+            <label for="signe">Signé</label>
+            <select
+              id="signe"
+              [(ngModel)]="convention.signe"
+              name="signe"
+              class="form-select"
+              required
+            >
+              <option [value]="1">Oui</option>
+              <option [value]="0">Non</option>
+            </select>
+          </div>
+
+          <div class="col-md-6" *ngIf="convention.signe">
+            <label for="date_signature">Date de signature</label>
+            <input
+              id="date_signature"
+              type="date"
+              [(ngModel)]="convention.date_signature"
+              name="date_signature"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+
         <!-- MI Financements -->
         <div class="form-group mt-4">
           <h5>Financements MI</h5>
@@ -173,7 +179,7 @@
                 class="form-select"
                 required
               >
-                <option value="">Type de financement</option>
+                <option value="" selected>Type de financement</option>
                 <option *ngFor="let mi of miFinancementTypes" [value]="mi.id">
                   {{ mi.nom }}
                 </option>
@@ -187,7 +193,7 @@
                 class="form-control"
                 placeholder="Montant (MDH)"
                 min="0"
-                step="0.01"
+                step="1"
                 required
               />
             </div>

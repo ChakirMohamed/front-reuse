@@ -60,6 +60,7 @@ export class CreateConventionComponent implements OnInit {
   ngOnInit(): void {
     this.loadReferenceData();
     this.generateYears();
+    console.log("miFinancementTypes",this.miFinancementTypes);
   }
 
   loadReferenceData(): void {
@@ -77,6 +78,8 @@ export class CreateConventionComponent implements OnInit {
 
     // Load all communes for name lookup
     this.communeService.getAllCommunes().subscribe(data => this.allCommunes = data);
+
+
   }
 
   generateYears(): void {

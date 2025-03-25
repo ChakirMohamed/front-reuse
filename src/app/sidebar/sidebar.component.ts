@@ -4,6 +4,7 @@ import { CourrierService } from '../services/courrier.service';
 export interface RouteInfo {
     path: string;
     title: string;
+    navTitle: string;
     icon: string;
     class: string;
     children?: RouteInfo[]; // Support for submenus
@@ -11,36 +12,56 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: '/Dashboard', title: 'Dashboard', icon: 'nc-bank', class: '' },
-    { path: '/conventions', title: 'Conventions', icon: 'nc-book-bookmark', class: '' },
-    {
-        path: '/courriers',
-        title: 'Courriers',
-        icon: 'nc-email-85',
-        class: '',
-        expanded: false,
-        children: [], // Start with an empty array, to be populated dynamically
-    },
-    {
-      path: '/steps',
-      title: 'STEPs',
-      icon: 'nc-atom',
-      class: '',
-      expanded: false,
-      children: [], // Start with an empty array, to be populated dynamically
+  { path: "/Dashboard", title: "Dashboard", icon: "nc-bank", class: "",navTitle:"Dashboard" },
+  {
+    path: "/conventions",
+    title: "Conventions",
+    navTitle: "Conventions",
+    icon: "nc-book-bookmark",
+    class: "",
+    expanded: false,
+    children: [
+      { path: `/ajouter-convention`, navTitle: "Nouvelle convention", class: "", icon: null,title:"Ajouter" },
+      { path: `/conventions`, navTitle: "Les conventions", class: "", icon: null,title:"Afficher" },
+    ],
   },
-    /* Add other menu items here if necessary */
+  {
+    path: "/courriers",
+    title: "Courriers",
+    navTitle: "Courriers",
+    icon: "nc-email-85",
+    class: "",
+    expanded: false,
+    children: [], // Start with an empty array, to be populated dynamically
+  },
+  {
+    path: "/steps",
+    title: "STEPs",
+    navTitle: "STEPs",
+    icon: "nc-atom",
+    class: "",
+    expanded: false,
+    children: [
+      { path: `/ajouter-step`, title: "Ajouter",navTitle: "Nounelle STEP", class: "", icon: null },
+      { path: `/list-steps`, navTitle: "Liste des STEP",title:"Afficher", class: "", icon: null },
+    ],
+  },
+  {
+    path: "/collectivites",
+    title: " Collectivités",
+    navTitle: " Collectivités",
+    icon: "nc-world-2",
+    class: "",
+  },
 
-    //{ path: '/ajouter-step',         title: 'Ajouter STEP',             icon:'nc-atom',    class: '' },
-    { path: '/collectivites',         title: ' Collectivités',             icon:'nc-world-2',    class: '' },
-    //{ path: '/icons',         title: 'Icons',             icon:'nc-diamond',    class: '' },
-    // { path: '/maps',          title: 'Maps',              icon:'nc-pin-3',      class: '' },
-    //{ path: '/notifications', title: 'Notifications',     icon:'nc-bell-55',    class: '' },
-    // { path: '/user',          title: 'User Profile',      icon:'nc-single-02',  class: '' },
-    // { path: '/table',         title: 'Table List',        icon:'nc-tile-56',    class: '' },
-    // { path: '/typography',    title: 'Typography',        icon:'nc-caps-small', class: '' },
-    // { path: '/upgrade',       title: 'Upgrade to PRO',    icon:'nc-spaceship',  class: 'active-pro' },
 
+  //{ path: '/icons',         title: 'Icons',             icon:'nc-diamond',    class: '' },
+  // { path: '/maps',          title: 'Maps',              icon:'nc-pin-3',      class: '' },
+  //{ path: '/notifications', title: 'Notifications',     icon:'nc-bell-55',    class: '' },
+  // { path: '/user',          title: 'User Profile',      icon:'nc-single-02',  class: '' },
+  // { path: '/table',         title: 'Table List',        icon:'nc-tile-56',    class: '' },
+  // { path: '/typography',    title: 'Typography',        icon:'nc-caps-small', class: '' },
+  // { path: '/upgrade',       title: 'Upgrade to PRO',    icon:'nc-spaceship',  class: 'active-pro' },
 ];
 
 @Component({
@@ -59,7 +80,7 @@ export class SidebarComponent implements OnInit {
 
     // Toggle submenu expanded state
     toggleSubmenu(menuItem: RouteInfo): void {
-        menuItem.expanded = !menuItem.expanded;
+      this.menuItems.forEach(i => i.expanded = i === menuItem ? !i.expanded : false);
     }
 
     // Initialize menu with dynamic data
@@ -72,6 +93,7 @@ export class SidebarComponent implements OnInit {
                 (types) => {
                     courriersMenu.children = types.map((type: any) => ({
                         path: `/courriers/type/${type.nom}`,
+                        navTitle: "Courriers: "+type.nom,
                         title: type.nom,
 
                         class: '',
@@ -83,15 +105,7 @@ export class SidebarComponent implements OnInit {
             );
         }
 
-        const stepsMenu = this.menuItems.find((item) => item.path === '/steps');
-        if (stepsMenu) {
 
-          stepsMenu.children = [
-            {path: `/ajouter-step`,title: 'Ajouter',class: '',icon:null},
-            {path: `/list-steps`,title: 'Afficher',class: '',icon:null},
-          ]
-
-      }
     }
 }
 

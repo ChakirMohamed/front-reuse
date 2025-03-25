@@ -3,11 +3,11 @@
     margin: 20px auto;
     max-width: 1000px;
 
-    .card-header {
-      background-color: #f8f9fa;
-      padding: 15px;
-      border-bottom: 1px solid #ddd;
-    }
+    // .card-header {
+    //   background-color: #f8f9fa;
+    //   padding: 15px;
+    //   border-bottom: 1px solid #ddd;
+    // }
 
     .card-body {
       padding: 25px;
@@ -24,7 +24,12 @@
         .form-control, .form-select {
           border-radius: 4px;
           padding: 8px 12px;
+
         }
+        .form-select{
+          cursor: pointer;
+        }
+
       }
 
       h5 {

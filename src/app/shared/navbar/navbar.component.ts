@@ -33,18 +33,41 @@ export class NavbarComponent implements OnInit{
           this.sidebarClose();
        });
     }
-    getTitle(){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
+    // getTitle(){
+    //   var titlee = this.location.prepareExternalUrl(this.location.path());
+    //   if(titlee.charAt(0) === '#'){
+    //       titlee = titlee.slice( 1 );
+    //   }
+    //   for(var item = 0; item < this.listTitles.length; item++){
+    //       if(this.listTitles[item].path === titlee){
+    //           return this.listTitles[item].title;
+    //       }
+    //   }
+    //   return '';
+    //   return 'Dashboard';
+    // }
+    getTitle() {
+      let titlee = this.location.prepareExternalUrl(this.location.path());
+      if (titlee.charAt(0) === '#') {
+        titlee = titlee.slice(1);
       }
-      for(var item = 0; item < this.listTitles.length; item++){
-          if(this.listTitles[item].path === titlee){
-              return this.listTitles[item].title;
+
+      // First check top-level routes
+      for (let item of this.listTitles) {
+        if (item.path === titlee) {
+          return item.navTitle;
+        }
+
+        // Then check child routes if they exist
+        if (item.children) {
+          const child = item.children.find(c => c.path === titlee);
+          if (child) {
+            return child.navTitle;
           }
+        }
       }
-      return '';
-      return 'Dashboard';
+
+      return 'S.T.R'; // Default title
     }
     sidebarToggle() {
         if (this.sidebarVisible === false) {
