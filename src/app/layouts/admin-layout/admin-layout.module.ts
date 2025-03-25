@@ -31,6 +31,7 @@ import { AllCollectivitesComponent } from '../../pages/Collectivites/all-collect
 import { StepShowModalComponent } from '../../pages/STEP/step-show-modal/step-show-modal/step-show-modal.component';
 import { EditStepComponent } from '../../pages/STEP/edit-step/edit-step.component';
 import { ListConventionsComponent } from '../../pages/conventions/list-conventions/list-conventions.component';
+import { CreateConventionComponent } from '../../pages/conventions/create-convention/create-convention.component';
 // Import Angular Material Modules
 
 import { MatSelectModule } from '@angular/material/select';
@@ -39,6 +40,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
+
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import {MatDividerModule} from '@angular/material/divider';
     ListStepsComponent,
     StepShowModalComponent,
     EditStepComponent,
-    ListConventionsComponent
+    CreateConventionComponent,
+    ListConventionsComponent,
+
   ]
 })
 

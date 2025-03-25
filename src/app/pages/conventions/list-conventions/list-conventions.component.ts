@@ -112,7 +112,8 @@ export class ListConventionsComponent implements OnInit {
   }
 
   onYearChange() {
-    this.loadConventions();
+    this.toastr.error('filter year disabled', 'Error');
+    //this.loadConventions();
   }
 
   clearFilters() {

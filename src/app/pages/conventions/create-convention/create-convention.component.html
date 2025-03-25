@@ -1,0 +1,288 @@
+<div class="create-convention-container">
+  <form (ngSubmit)="onSubmit()" #conventionForm="ngForm">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Nouvelle Convention</h4>
+      </div>
+      <div class="card-body">
+        <!-- Basic Information -->
+        <div class="form-group">
+          <label for="titre">Titre de la convention</label>
+          <input
+            id="titre"
+            type="text"
+            [(ngModel)]="convention.titre"
+            name="titre"
+            class="form-control"
+            placeholder="Titre de la convention"
+            required
+          />
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="date_signature">Date de signature</label>
+            <input
+              id="date_signature"
+              type="date"
+              [(ngModel)]="convention.date_signature"
+              name="date_signature"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="annee">Année</label>
+            <select
+              id="annee"
+              [(ngModel)]="convention.annee"
+              name="annee"
+              class="form-select"
+              required
+            >
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="montant">Montant (MDH)</label>
+          <input
+            id="montant"
+            type="number"
+            [(ngModel)]="convention.montant"
+            name="montant"
+            class="form-control"
+            placeholder="Montant en MDH"
+            min="0"
+            step="0.01"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="consistance">Consistance</label>
+          <textarea
+            id="consistance"
+            [(ngModel)]="convention.consistance"
+            name="consistance"
+            class="form-control"
+            rows="3"
+            placeholder="Détails de la convention"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label for="signe">Signé</label>
+            <select
+              id="signe"
+              [(ngModel)]="convention.signe"
+              name="signe"
+              class="form-select"
+              required
+            >
+              <option [value]="1">Oui</option>
+              <option [value]="0">Non</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="id_status">Statut</label>
+            <select
+              id="id_status"
+              [(ngModel)]="convention.id_status"
+              name="id_status"
+              class="form-select"
+              required
+            >
+              <option *ngFor="let status of statuses" [value]="status.id">{{ status.nom }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Communes Selection -->
+        <div class="form-group mt-4">
+          <h5>Communes concernées</h5>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="region">Région</label>
+              <select
+                name="region"
+                [(ngModel)]="selectedRegion"
+                (change)="onRegionChange()"
+                class="form-select"
+              >
+                <option value="null">Sélectionnez la Région</option>
+                <option *ngFor="let region of regions" [value]="region.id">
+                  {{ region.nom }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="province">Province</label>
+              <select
+                name="province"
+                [(ngModel)]="selectedProvince"
+                (change)="onProvinceChange()"
+                class="form-select"
+                [disabled]="!selectedRegion"
+              >
+                <option value="null">Sélectionnez la Province</option>
+                <option *ngFor="let province of provinces" [value]="province.id">
+                  {{ province.nom }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="commune">Commune</label>
+              <select
+                name="commune"
+                [(ngModel)]="selectedCommune"
+                class="form-select"
+                [disabled]="!selectedProvince"
+                (change)="addCommune()"
+              >
+                <option value="null">Sélectionnez la Commune</option>
+                <option *ngFor="let commune of communes" [value]="commune.id">
+                  {{ commune.nom }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="selected-communes mt-2">
+            <span *ngFor="let communeId of convention.communes" class="badge badge-primary me-2">
+              {{ getCommuneName(communeId) }}
+              <button type="button" class="btn-close" (click)="removeCommune(communeId)"></button>
+            </span>
+          </div>
+        </div>
+
+        <!-- MI Financements -->
+        <div class="form-group mt-4">
+          <h5>Financements MI</h5>
+          <div *ngFor="let financement of miFinancements; let i = index" class="row mb-2">
+            <div class="col-md-6">
+              <select
+                [(ngModel)]="financement.id_mi_financement"
+                [name]="'mi_financement_' + i"
+                class="form-select"
+                required
+              >
+                <option value="">Type de financement</option>
+                <option *ngFor="let mi of miFinancementTypes" [value]="mi.id">
+                  {{ mi.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <input
+                type="number"
+                [(ngModel)]="financement.montant"
+                [name]="'mi_montant_' + i"
+                class="form-control"
+                placeholder="Montant (MDH)"
+                min="0"
+                step="0.01"
+                required
+              />
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-danger" (click)="removeMiFinancement(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" (click)="addMiFinancement()">
+            <i class="bi bi-plus-circle"></i> Ajouter financement MI
+          </button>
+        </div>
+
+        <!-- Other Financements -->
+        <div class="form-group mt-4">
+          <h5>Autres financements</h5>
+          <div *ngFor="let financement of autreFinancements; let i = index" class="row mb-2">
+            <div class="col-md-6">
+              <input
+                type="text"
+                [(ngModel)]="financement.titre"
+                [name]="'autre_titre_' + i"
+                class="form-control"
+                placeholder="Source (ex: Région)"
+                required
+              />
+            </div>
+            <div class="col-md-5">
+              <input
+                type="number"
+                [(ngModel)]="financement.montant"
+                [name]="'autre_montant_' + i"
+                class="form-control"
+                placeholder="Montant (MDH)"
+                min="0"
+                step="0.01"
+                required
+              />
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-danger" (click)="removeAutreFinancement(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" (click)="addAutreFinancement()">
+            <i class="bi bi-plus-circle"></i> Ajouter autre financement
+          </button>
+        </div>
+
+        <!-- Usages -->
+        <div class="form-group mt-4">
+          <h5>Usages</h5>
+          <div *ngFor="let usage of convention.usages; let i = index" class="row mb-2">
+            <div class="col-md-6">
+              <select
+                [(ngModel)]="usage.id_usage"
+                [name]="'usage_id_' + i"
+                class="form-select"
+                required
+              >
+                <option value="">Sélectionnez un usage</option>
+                <option *ngFor="let usageType of usageTypes" [value]="usageType.id">
+                  {{ usageType.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <input
+                type="text"
+                [(ngModel)]="usage.libelle"
+                [name]="'usage_libelle_' + i"
+                class="form-control"
+                placeholder="Libellé spécifique"
+              />
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-danger" (click)="removeUsage(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" (click)="addUsage()">
+            <i class="bi bi-plus-circle"></i> Ajouter usage
+          </button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
