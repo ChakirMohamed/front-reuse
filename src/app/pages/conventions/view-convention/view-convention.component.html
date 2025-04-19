@@ -1,0 +1,136 @@
+
+<div class="view-convention-container">
+  <mat-card class="convention-card">
+    <mat-card-header>
+      <mat-card-title>{{ convention?.titre }}</mat-card-title>
+      <mat-card-subtitle>
+        <span class="badge" [ngClass]="{
+          'bg-success': convention?.signe === 1,
+          'bg-warning': convention?.signe !== 1
+        }">
+          {{ convention?.signe === 1 ? 'Signé' : 'Non signé' }}
+        </span>
+        <span class="badge bg-primary ms-2">
+          {{ convention?.status_nom }}
+        </span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <!-- Basic Info Section -->
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>Année</span>
+              <span matListItemLine>{{ convention?.annee }}</span>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>Date de signature</span>
+              <span matListItemLine>
+                {{ convention?.signe === 1 ? (convention?.date_signature | date:'dd/MM/yyyy') : 'Non signé' }}
+              </span>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>Montant total</span>
+              <span matListItemLine>{{ convention?.montant_total | currency:'MAD':'symbol':'1.2-2' }}</span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+
+        <div class="col-md-6">
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>Région</span>
+              <span matListItemLine>{{ convention?.region_nom }}</span>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>Province</span>
+              <span matListItemLine>{{ convention?.provinces_names?.split(',')[0] }}</span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+
+      <!-- Communes Section -->
+      <div class="section mt-4">
+        <h5 class="section-title">Communes concernées</h5>
+        <div class="communes-container">
+          <span class="badge bg-primary me-2 mb-2" *ngFor="let commune of convention?.communes">
+            {{ commune }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Consistance Section -->
+      <div class="section mt-4">
+        <h5 class="section-title">Consistance</h5>
+        <p class="consistance-text">{{ convention?.consistance }}</p>
+      </div>
+
+      <!-- Financements Section -->
+      <div class="row mt-4">
+        <!-- MI Financements -->
+        <div class="col-md-6">
+          <div class="section">
+            <h5 class="section-title">Financements MI</h5>
+            <mat-list dense>
+              <mat-list-item *ngFor="let mi of convention?.mi_financements">
+                <span matListItemTitle>{{ mi.nom }}</span>
+                <span matListItemLine>{{ mi.montant | currency:'MAD':'symbol':'1.2-2' }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="!convention?.mi_financements?.length">
+                <span matListItemLine class="text-muted">Aucun financement MI</span>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+
+        <!-- Other Financements -->
+        <div class="col-md-6">
+          <div class="section">
+            <h5 class="section-title">Autres financements</h5>
+            <mat-list dense>
+              <mat-list-item *ngFor="let autre of convention?.autre_convention_financement">
+                <span matListItemTitle>{{ autre.titre }}</span>
+                <span matListItemLine>{{ autre.montant | currency:'MAD':'symbol':'1.2-2' }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="!convention?.autre_convention_financement?.length">
+                <span matListItemLine class="text-muted">Aucun autre financement</span>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usages Section -->
+      <div class="section mt-4">
+        <h5 class="section-title">Usages</h5>
+        <mat-list dense>
+          <mat-list-item *ngFor="let usage of convention?.usages">
+            <span matListItemTitle>{{ usage.nom }}</span>
+            <span matListItemLine *ngIf="usage.libelle">{{ usage.libelle }}</span>
+          </mat-list-item>
+          <mat-list-item *ngIf="!convention?.usages?.length">
+            <span matListItemLine class="text-muted">Aucun usage spécifié</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Retour
+      </button>
+      <button mat-raised-button color="accent" class="ms-2" (click)="editConvention()">
+        <mat-icon>edit</mat-icon>
+        Modifier
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

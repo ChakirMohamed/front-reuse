@@ -179,7 +179,7 @@
                 class="form-select"
                 required
               >
-                <option value="" selected>Type de financement</option>
+
                 <option *ngFor="let mi of miFinancementTypes" [value]="mi.id">
                   {{ mi.nom }}
                 </option>
@@ -199,7 +199,7 @@
             </div>
             <div class="col-md-1">
               <button type="button" class="btn btn-danger" (click)="removeMiFinancement(i)">
-                <i class="bi bi-trash"></i>
+                <i class="nc-simple-remove"></i>
               </button>
             </div>
           </div>

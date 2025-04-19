@@ -60,7 +60,6 @@ export class CreateConventionComponent implements OnInit {
   ngOnInit(): void {
     this.loadReferenceData();
     this.generateYears();
-    console.log("miFinancementTypes",this.miFinancementTypes);
   }
 
   loadReferenceData(): void {
@@ -179,9 +178,11 @@ export class CreateConventionComponent implements OnInit {
       mi_financements: this.miFinancements.filter(f => f.id_mi_financement && f.montant),
       autre_financements: this.autreFinancements.filter(f => f.titre && f.montant)
     };
+    // console.log("payload",payload);
+    // return;
 
     // Basic validation
-    if (!payload.titre || !payload.date_signature || !payload.id_status) {
+    if (!payload.titre  || !payload.id_status ) {
       this.toastr.error('Veuillez remplir tous les champs obligatoires', 'Erreur');
       return;
     }

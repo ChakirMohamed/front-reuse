@@ -32,15 +32,20 @@ import { StepShowModalComponent } from '../../pages/STEP/step-show-modal/step-sh
 import { EditStepComponent } from '../../pages/STEP/edit-step/edit-step.component';
 import { ListConventionsComponent } from '../../pages/conventions/list-conventions/list-conventions.component';
 import { CreateConventionComponent } from '../../pages/conventions/create-convention/create-convention.component';
+import { ViewConventionComponent } from '../../pages/conventions/view-convention/view-convention.component';
 // Import Angular Material Modules
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
 
+import { MatListModule } from '@angular/material/list';
+
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -58,7 +63,7 @@ import {MatDividerModule} from '@angular/material/divider';
     MatInputModule,
     MatIconModule,
     MatDividerModule,
-    MatSelectModule,MatTableModule,MatCardModule,
+    MatSelectModule,MatTableModule,MatCardModule,MatListModule,MatBadgeModule
 
   ],
   declarations: [
@@ -80,6 +85,7 @@ import {MatDividerModule} from '@angular/material/divider';
     EditStepComponent,
     CreateConventionComponent,
     ListConventionsComponent,
+    ViewConventionComponent,
 
   ]
 })

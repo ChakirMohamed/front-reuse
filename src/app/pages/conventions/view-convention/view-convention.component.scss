@@ -1,0 +1,88 @@
+.view-convention-container {
+  padding: 20px;
+
+  .convention-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .mat-card-header {
+      margin-bottom: 20px;
+
+      .mat-card-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .mat-card-subtitle {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+
+        .badge {
+          font-size: 0.8rem;
+          padding: 5px 10px;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .section {
+      margin-bottom: 20px;
+
+      .section-title {
+        color: #3f51b5;
+        font-weight: 500;
+        margin-bottom: 15px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .communes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .badge {
+          padding: 8px 12px;
+          font-size: 0.9rem;
+        }
+      }
+
+      .consistance-text {
+        white-space: pre-line;
+        line-height: 1.6;
+      }
+    }
+
+    .mat-list-item {
+      height: auto !important;
+      padding: 8px 0;
+
+      span[matListItemLine] {
+        font-size: 0.9rem;
+        color: #666;
+      }
+    }
+
+    .mat-card-actions {
+      padding: 16px 0 0 0;
+
+      button {
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .view-convention-container {
+    padding: 10px;
+
+    .convention-card {
+      padding: 15px;
+    }
+  }
+}
