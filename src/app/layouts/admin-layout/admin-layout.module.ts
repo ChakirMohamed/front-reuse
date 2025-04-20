@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule,DecimalPipe  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
@@ -47,6 +47,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatBadgeModule } from '@angular/material/badge';
 
+//pipes
+import { MdhCurrencyPipe } from '../../shared/pipes/mdh-currency.pipe'
 
 @NgModule({
   imports: [
@@ -86,8 +88,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     CreateConventionComponent,
     ListConventionsComponent,
     ViewConventionComponent,
-
-  ]
+    MdhCurrencyPipe
+  ],
+  providers:[DecimalPipe]
 })
 
 export class AdminLayoutModule {}

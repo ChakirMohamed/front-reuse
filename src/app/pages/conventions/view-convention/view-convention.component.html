@@ -24,18 +24,16 @@
         <div class="col-md-6">
           <mat-list>
             <mat-list-item>
-              <span matListItemTitle>Année</span>
-              <span matListItemLine>{{ convention?.annee }}</span>
+              <span matListItemTitle>Région: </span>
+              <span matListItemLine>{{ convention?.region_nom }}</span>
             </mat-list-item>
             <mat-list-item>
-              <span matListItemTitle>Date de signature</span>
-              <span matListItemLine>
-                {{ convention?.signe === 1 ? (convention?.date_signature | date:'dd/MM/yyyy') : 'Non signé' }}
-              </span>
+              <span matListItemTitle>Province: </span>
+              <span matListItemLine>{{ convention?.provinces_names?.split(',')[0] }}</span>
             </mat-list-item>
             <mat-list-item>
-              <span matListItemTitle>Montant total</span>
-              <span matListItemLine>{{ convention?.montant_total | currency:'MAD':'symbol':'1.2-2' }}</span>
+              <span matListItemTitle>Montant total: </span>
+              <span class="badge bg-success me-2 mb-2" matListItemLine>{{ convention?.montant_total | mdhCurrency }}</span>
             </mat-list-item>
           </mat-list>
         </div>
@@ -43,13 +41,16 @@
         <div class="col-md-6">
           <mat-list>
             <mat-list-item>
-              <span matListItemTitle>Région</span>
-              <span matListItemLine>{{ convention?.region_nom }}</span>
+              <span matListItemTitle>Année : </span>
+              <span matListItemLine>{{ convention?.annee }}</span>
             </mat-list-item>
             <mat-list-item>
-              <span matListItemTitle>Province</span>
-              <span matListItemLine>{{ convention?.provinces_names?.split(',')[0] }}</span>
+              <span matListItemTitle>Date de signature: </span>
+              <span matListItemLine>
+                {{ convention?.signe === 1 ? (convention?.date_signature | date:'dd/MM/yyyy') : 'Non signé' }}
+              </span>
             </mat-list-item>
+
           </mat-list>
         </div>
       </div>
@@ -79,7 +80,7 @@
             <mat-list dense>
               <mat-list-item *ngFor="let mi of convention?.mi_financements">
                 <span matListItemTitle>{{ mi.nom }}</span>
-                <span matListItemLine>{{ mi.montant | currency:'MAD':'symbol':'1.2-2' }}</span>
+                <span matListItemLine>{{ mi.montant | mdhCurrency }}</span>
               </mat-list-item>
               <mat-list-item *ngIf="!convention?.mi_financements?.length">
                 <span matListItemLine class="text-muted">Aucun financement MI</span>
@@ -95,7 +96,7 @@
             <mat-list dense>
               <mat-list-item *ngFor="let autre of convention?.autre_convention_financement">
                 <span matListItemTitle>{{ autre.titre }}</span>
-                <span matListItemLine>{{ autre.montant | currency:'MAD':'symbol':'1.2-2' }}</span>
+                <span matListItemLine>{{ autre.montant | mdhCurrency }}</span>
               </mat-list-item>
               <mat-list-item *ngIf="!convention?.autre_convention_financement?.length">
                 <span matListItemLine class="text-muted">Aucun autre financement</span>
