@@ -47,6 +47,9 @@ export class ListConventionsComponent implements OnInit {
     this.loadStatuses();
     this.loadConventions();
   }
+  viewConvention(id: number): void {
+    this.router.navigate(['/conventions', id]);
+  }
 
   loadRegions() {
     this.regionService.getAllRegions().subscribe(

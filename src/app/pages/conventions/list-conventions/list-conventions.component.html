@@ -49,6 +49,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            
           </div>
 
           <!-- Year Filter -->
@@ -154,6 +155,9 @@
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
           <mat-cell *matCellDef="let convention">
+            <button mat-icon-button (click)="viewConvention(convention.id)">
+              <mat-icon>visibility</mat-icon>
+            </button>
             <button mat-icon-button (click)="deleteConvention(convention)">
               <mat-icon>delete</mat-icon>
             </button>
