@@ -14,6 +14,7 @@ import { IconsComponent }           from '../../pages/icons/icons.component';
 import { NotificationsComponent }   from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component';
 import { ListStepsComponent }         from '../../pages/STEP/list-steps/list-steps.component';
+import { EditConventionComponent } from '../../pages/conventions/edit-convention/edit-convention.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CourriersComponent } from '../../pages/courriers/courriers.component';
@@ -33,19 +34,17 @@ import { EditStepComponent } from '../../pages/STEP/edit-step/edit-step.componen
 import { ListConventionsComponent } from '../../pages/conventions/list-conventions/list-conventions.component';
 import { CreateConventionComponent } from '../../pages/conventions/create-convention/create-convention.component';
 import { ViewConventionComponent } from '../../pages/conventions/view-convention/view-convention.component';
-// Import Angular Material Modules
 
+// Import Angular Material Modules
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-
-
 import { MatListModule } from '@angular/material/list';
-
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 //pipes
 import { MdhCurrencyPipe } from '../../shared/pipes/mdh-currency.pipe'
@@ -65,7 +64,7 @@ import { MdhCurrencyPipe } from '../../shared/pipes/mdh-currency.pipe'
     MatInputModule,
     MatIconModule,
     MatDividerModule,
-    MatSelectModule,MatTableModule,MatCardModule,MatListModule,MatBadgeModule
+    MatSelectModule,MatTableModule,MatCardModule,MatListModule,MatBadgeModule,MatChipsModule,MatSnackBarModule
 
   ],
   declarations: [
@@ -88,6 +87,9 @@ import { MdhCurrencyPipe } from '../../shared/pipes/mdh-currency.pipe'
     CreateConventionComponent,
     ListConventionsComponent,
     ViewConventionComponent,
+    EditConventionComponent,
+
+
     MdhCurrencyPipe
   ],
   providers:[DecimalPipe]

@@ -17,6 +17,7 @@ import { EditStepComponent } from 'app/pages/STEP/edit-step/edit-step.component'
 import { ListConventionsComponent } from 'app/pages/conventions/list-conventions/list-conventions.component';
 import { CreateConventionComponent } from 'app/pages/conventions/create-convention/create-convention.component';
 import { ViewConventionComponent } from 'app/pages/conventions/view-convention/view-convention.component';
+import { EditConventionComponent } from 'app/pages/conventions/edit-convention/edit-convention.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -33,8 +34,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'collectivites',        component: AllCollectivitesComponent },
     { path: 'list-steps',        component: ListStepsComponent },
     { path: 'edit-step/:id', component: EditStepComponent },
+
     //conventions
     { path: 'conventions', component: ListConventionsComponent },
     { path: 'ajouter-convention', component: CreateConventionComponent },
     { path: 'conventions/:id', component: ViewConventionComponent },
+    { path: 'edit-convention/:id', component: EditConventionComponent }
 ];

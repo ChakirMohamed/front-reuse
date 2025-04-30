@@ -1,0 +1,328 @@
+<div class="edit-convention-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Modifier Convention</mat-card-title>
+      <mat-card-subtitle>
+        <span class="badge" [ngClass]="{
+          'bg-success': convention.signe === 1,
+          'bg-warning': convention.signe !== 1
+        }">
+          {{ convention.signe === 1 ? 'Signé' : 'Non signé' }}
+        </span>
+        <span class="badge bg-primary ms-2">
+          {{ getStatusName(convention.id_status) }}
+        </span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #conventionForm="ngForm">
+        <!-- Basic Information -->
+        <div class="form-group mt-3">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Titre de la convention</mat-label>
+            <input
+              matInput
+              id="titre"
+              type="text"
+              [(ngModel)]="convention.titre"
+              name="titre"
+              placeholder="Titre de la convention"
+              required
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- Communes Selection -->
+        <div class="form-group mt-4">
+          <h5 class="section-title">Communes concernées</h5>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Région</mat-label>
+                <mat-select
+                  [(value)]="selectedRegion"
+                  (selectionChange)="onRegionChange()"
+                  required
+                >
+                  <mat-option value="null">Sélectionnez la Région</mat-option>
+                  <mat-option *ngFor="let region of regions" [value]="region.id">
+                    {{ region.nom }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Province</mat-label>
+                <mat-select
+                  [(value)]="selectedProvince"
+                  (selectionChange)="onProvinceChange()"
+                  [disabled]="!selectedRegion"
+                  required
+                >
+                  <mat-option value="null">Sélectionnez la Province</mat-option>
+                  <mat-option *ngFor="let province of provinces" [value]="province.id">
+                    {{ province.nom }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Commune</mat-label>
+                <mat-select
+                  [(value)]="selectedCommune"
+                  [disabled]="!selectedProvince"
+                  (selectionChange)="addCommune()"
+                >
+                  <mat-option value="null">Sélectionnez la Commune</mat-option>
+                  <mat-option *ngFor="let commune of communes" [value]="commune.id">
+                    {{ commune.nom }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="selected-communes mt-3">
+            <!-- <mat-chip-listbox>
+              <mat-chip *ngFor="let communeId of convention.communes" (removed)="removeCommune(communeId)">
+                {{ getCommuneName(communeId) }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-chip-listbox> -->
+            <div class="selected-communes">
+              <span class="badge bg-primary me-2 mb-2" *ngFor="let communeId of convention.communes">
+                {{ getCommuneName(communeId) }}
+                <button type="button" class="btn-close btn-close-white ms-2" (click)="removeCommune(communeId)"></button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status and Year -->
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Statut</mat-label>
+              <mat-select
+                [(value)]="convention.id_status"
+                name="id_status"
+                required
+              >
+                <mat-option [value]="null">Sélectionnez le statut</mat-option>
+                <mat-option *ngFor="let status of statuses" [value]="status.id">
+                  {{ status.nom }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Année</mat-label>
+              <mat-select [(value)]="convention.annee" required>
+                <mat-option *ngFor="let year of years" [value]="year">
+                  {{ year }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Consistance -->
+        <div class="form-group mt-3">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Consistance</mat-label>
+            <textarea
+              matInput
+              id="consistance"
+              [(ngModel)]="convention.consistance"
+              name="consistance"
+              rows="4"
+              placeholder="Détails de la convention"
+              required
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <!-- Signature -->
+        <div class="row g-3 mt-2">
+          <div [class.col-md-6]="convention.signe" [class.col-md-12]="!convention.signe">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Signé</mat-label>
+              <mat-select [(value)]="convention.signe" required>
+                <mat-option [value]="1">Oui</mat-option>
+                <mat-option [value]="0">Non</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6" *ngIf="convention.signe">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Date de signature</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [(ngModel)]="convention.date_signature"
+                name="date_signature"
+                required
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- MI Financements -->
+        <div class="form-group mt-4">
+          <h5 class="section-title">Financements MI</h5>
+          <div *ngFor="let financement of miFinancements; let i = index" class="row g-3 mb-2">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Type de financement</mat-label>
+                <mat-select
+                  [(value)]="financement.id_mi_financement"
+                  [name]="'mi_financement_' + i"
+                  required
+                >
+                  <mat-option *ngFor="let mi of miFinancementTypes" [value]="mi.id">
+                    {{ mi.nom }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Montant (MDH)</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="financement.montant"
+                  [name]="'mi_montant_' + i"
+                  min="0"
+                  step="0.01"
+                  required
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-md-1 d-flex align-items-center">
+              <button mat-icon-button color="warn" (click)="removeMiFinancement(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-button type="button" color="primary" (click)="addMiFinancement()">
+            <mat-icon>add</mat-icon>
+            Ajouter financement MI
+          </button>
+        </div>
+
+        <!-- Other Financements -->
+        <div class="form-group mt-4">
+          <h5 class="section-title">Autres financements</h5>
+          <div *ngFor="let financement of autreFinancements; let i = index" class="row g-3 mb-2">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Source (ex: Région)</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="financement.titre"
+                  [name]="'autre_titre_' + i"
+                  required
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Montant (MDH)</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="financement.montant"
+                  [name]="'autre_montant_' + i"
+                  min="0"
+                  step="0.01"
+                  required
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-md-1 d-flex align-items-center">
+              <button mat-icon-button color="warn" (click)="removeAutreFinancement(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-button type="button" color="primary" (click)="addAutreFinancement()">
+            <mat-icon>add</mat-icon>
+            Ajouter autre financement
+          </button>
+        </div>
+
+        <!-- Usages -->
+        <div class="form-group mt-4">
+          <h5 class="section-title">Usages</h5>
+          <div *ngFor="let usage of convention.usages; let i = index" class="row g-3 mb-2">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Type d'usage</mat-label>
+                <mat-select
+                  [(value)]="usage.id_usage"
+                  [name]="'usage_id_' + i"
+                  required
+                >
+                  <mat-option value="">Sélectionnez un usage</mat-option>
+                  <mat-option *ngFor="let usageType of usageTypes" [value]="usageType.id">
+                    {{ usageType.nom }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Libellé spécifique</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="usage.libelle"
+                  [name]="'usage_libelle_' + i"
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-md-1 d-flex align-items-center">
+              <button mat-icon-button color="warn" (click)="removeUsage(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-button type="button" color="primary" (click)="addUsage()">
+            <mat-icon>add</mat-icon>
+            Ajouter usage
+          </button>
+        </div>
+
+        <mat-divider class="my-4"></mat-divider>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button mat-raised-button type="button" (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+            Annuler
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="conventionForm.invalid || isSubmitting">
+            <mat-icon>save</mat-icon>
+            Enregistrer
+            <mat-spinner *ngIf="isSubmitting" diameter="20" class="ms-2"></mat-spinner>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

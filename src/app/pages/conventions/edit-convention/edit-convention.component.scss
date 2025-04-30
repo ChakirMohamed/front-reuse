@@ -1,0 +1,86 @@
+.edit-convention-container {
+  padding: 20px;
+
+  .mat-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .mat-card-header {
+      margin-bottom: 20px;
+
+      .mat-card-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      .mat-card-subtitle {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+
+        .badge {
+          font-size: 0.8rem;
+          padding: 5px 10px;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .section-title {
+      color: #3f51b5;
+      font-weight: 600;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .selected-communes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      mat-chip {
+        mat-icon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .mat-divider {
+      margin: 20px 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+
+    .mat-card {
+      padding: 15px;
+    }
+  }
+
+
+  .selected-communes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+
+      .btn-close {
+        font-size: 0.7rem;
+        margin-left: 4px;
+      }
+    }
+  }
+}

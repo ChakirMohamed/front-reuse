@@ -47,12 +47,20 @@ export const ROUTES: RouteInfo[] = [
     ],
   },
   {
+    path: "/404",
+    title: " Golfs",
+    navTitle: " Golfs",
+    icon: "nc-pin-3",
+    class: "",
+  },
+  {
     path: "/collectivites",
     title: " Collectivités",
     navTitle: " Collectivités",
     icon: "nc-world-2",
     class: "",
   },
+
 
 
   //{ path: '/icons',         title: 'Icons',             icon:'nc-diamond',    class: '' },
